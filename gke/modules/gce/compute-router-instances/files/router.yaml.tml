@@ -1,0 +1,97 @@
+DeviceName: ${device_name}
+SerialNumber: ${serial_number}
+RunVersion: ${router_version}
+KubernetesPeer: ${kubernetes_peer}
+HASetLabel: ${ha_set}
+HighAvailability: ${high_availability}
+HaAdminUp: ${haadminup}
+GcpPrivateBridge: ${gcp_private_bridge}
+${primary_interface_advertisement}
+DiscoveryRecords:
+  Vxlan: ${discovery_record_vxlan}
+  Scope: ${discovery_record_scope}
+Vxlan:
+  PrivateSubnet: ${vxlan_private_subnet}
+  StaticIP: ${static_ip}
+  Environment: ${vxlan_environment}
+  Mac:
+  SetMss: ${setmss}
+Authentication:
+  Gcp:
+    CredsPath: /root/auth.json
+    ProjectID: ${authentication_gcp_project_id}
+  C3:
+    Token: ${c3_token}
+Encryption:
+  Gcp:
+    KeyringID: ${encryption_gcp_keyring_id}
+    CryptokeyID: ${encryption_gcp_cryptokey_id}
+    Location: ${encryption_gcp_location}
+Storage:
+  Gcp:
+    Bucket: ${storage_gcp_bucket}
+Plugins:
+  Automation:
+    Terraform: true
+  Cloud:
+    Providers:
+      Gcp: true
+    Gcp:
+      Project: ${hosted_project}
+      EncryptedAuthFilePath: devices/configuration/environment/core-services/devices/${serial_number}/creds/gcpauth.enc
+      Region: ${region}
+      Zone: ${zone}
+      TargetIP: ${ip_address}
+      Instance: ${instance_id}
+      Routes:
+      ${ha_routes}
+Registry:
+  Images:
+    ${registry_images}
+Services:
+  Vxlan: ${services_vxlan}
+  ScopeDashboard: ${services_scope_dashboard}
+  Netdata: ${services_netdata}
+  Cadvisor: ${services_cadvisor}
+  Bgp: ${services_bgp}
+  C3: ${services_c3}
+  IPam: false
+  Prometheus: ${services_prometheus}
+  Slack: ${services_slack}
+  Scope: ${services_scope}
+  Nat: ${services_nat}
+  Loadbalancer: ${services_loadbalancer}
+  Teleport: ${services_teleport}
+  HostApd: ${services_hostapd}
+  IPSla: ${services_ipsla}
+  Configs:
+    IPSla:
+     ${services_configs_ipsla}
+    Prometheus:
+     ${prometheus_host_tags}
+    Api:
+      EncryptedCredsPath: ${services_configs_api_encryptedcredspath}
+    ${services_configs_bgp}
+    ${services_configs_nat_rules}
+    ${services_configs_routes}
+    ${services_configs_loadbalancer}
+    ${services_configs_hostapd}
+    Slack:
+      WebHook: ${services_configs_slack_webhook}
+      Channel: ${services_configs_slack_channel}
+    Router:
+      Memory: ${services_configs_router_memory}
+      MemorySwap: ${services_configs_router_memory_swap}
+      MemoryReservation: ${services_configs_router_memory_reservation}
+      CPUs: ${services_configs_router_cpus}
+    Scheduler:
+      Memory: ${services_configs_scheduler_memory}
+      MemorySwap: ${services_configs_scheduler_memory_swap}
+      MemoryReservation: ${services_configs_scheduler_memory_reservation}
+      CPUs: ${services_configs_scheduler_cpus}
+    Scope:
+      EncryptedCredsPath: devices/configuration/environments/${vxlan_environment}/scope-creds.enc
+      Proxy: ${service_configs_scope_proxy}
+    Snmp:
+      RoCommunityString: ${services_configs_snmp_rocommunity}
+UpgradeBucket: ${upgrade_bucket}
