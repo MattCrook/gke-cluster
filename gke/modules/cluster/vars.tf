@@ -2,7 +2,7 @@
 # Cluster
 ###################
 
-variable "name" {
+variable "cluster_name" {
   description = "The name of the cluster"
   type        = string
 }
@@ -155,10 +155,10 @@ variable "oauth_scopes" {
   default     = ["https://www.googleapis.com/auth/cloud-platform"]
 }
 
-variable "labels" {
-  description = "The Kubernetes labels (key/value pairs) to be applied to each node. The kubernetes.io/ and k8s.io/ prefixes are reserved by Kubernetes Core components and cannot be specified"
-  type = list(string)
-}
+// variable "labels" {
+//   description = "The Kubernetes labels (key/value pairs) to be applied to each node. The kubernetes.io/ and k8s.io/ prefixes are reserved by Kubernetes Core components and cannot be specified"
+//   type = list(string)
+// }
 
 // variable "metadata" {
 //   description = "The metadata key/value pairs assigned to instances in the cluster"

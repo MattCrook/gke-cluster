@@ -15,8 +15,8 @@ output "project" {
     value = "${google_container_cluster.cluster.project}"
 }
 
-output "zone" {
-    value = "${google_container_cluster.cluster.zone}"
+output "tpu_ipv4_cidr_block" {
+    value = "${google_container_cluster.cluster.tpu_ipv4_cidr_block}"
 }
 
 output "cluster_self_link" {

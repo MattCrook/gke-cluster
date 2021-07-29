@@ -4,6 +4,12 @@ variable "project" {
   default     = "k8-cluster-project"
 }
 
+variable "region" {
+  description = "The region of the project in GCP"
+  type        = string
+  default     = "us-central1"
+}
+
 variable "user" {
   description = "The username to use for HTTP basic authentication when accessing the Kubernetes master endpoint."
   type        = string
@@ -13,13 +19,14 @@ variable "user" {
 variable "network" {
   description = "The name or self_link of the Google Compute Engine network to which the cluster is connected"
   type        = string
-  defualt     = "default"
+  default     = "default"
 }
 
 variable "subnetwork" {
   description = "GCE subnetwork (is the default subnetwork for us-central1 right now)"
   type        = string
-  defualt     = "10.128.0.0/20"
+  default     = "default"
+  # default     = "10.128.0.0/20"
 }
 
 variable "primary_zone" {

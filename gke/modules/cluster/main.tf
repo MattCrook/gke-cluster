@@ -1,6 +1,6 @@
 resource "google_container_cluster" "cluster" {
     project             = "${var.project}"
-    name                = "${var.name}"
+    name                = "${var.cluster_name}"
     description         = "${var.cluster_description}"
     location            = "${var.primary_zone}"
     initial_node_count  = "${var.initial_node_count}"
@@ -23,8 +23,8 @@ resource "google_container_cluster" "cluster" {
 
     # This has been deprecated as of GKE 1.19.
     master_auth {
-        username = "${var.user}"
-        password = "${var.password}"
+        username = ""
+        password = ""
 
         client_certificate_config {
             issue_client_certificate = false
@@ -33,11 +33,11 @@ resource "google_container_cluster" "cluster" {
 
     addons_config {
         horizontal_pod_autoscaling {
-            enabled = true
+            disabled = !true
         }
 
         http_load_balancing {
-            enabled = true
+            disabled = !true
         }
     }
 }
@@ -68,9 +68,9 @@ resource "google_container_node_pool" "pool" {
         service_account = "${var.serviceaccount}"
         preemptible     = "${var.preemptible}"
         # metadata        = "${merge(var.metadata, map("startup-script-url", var.startup_script_url))}"
-        labels          = "${var.labels}"
+        # labels          = "${var.labels}"
         # tags            = ["${var.tags}"]
-        oauth_scopes    = ["${concat(var.default_oauth_scopes,var.oauth_scopes)}"]
+        oauth_scopes    = "${concat(var.default_oauth_scopes, var.oauth_scopes)}"
         # oauth_scopes    = ["https://www.googleapis.com/auth/cloud-platform"]
         metadata = {
             disable-legacy-endpoints = "true"

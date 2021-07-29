@@ -14,10 +14,6 @@ output "project" {
     value = "${module.cluster.project}"
 }
 
-output "zone" {
-    value = "${module.cluster.zone}"
-}
-
 output "endpoint" {
     description = "The IP address of this cluster's Kubernetes master"
     value       = "${module.cluster.endpoint}"
@@ -26,6 +22,10 @@ output "endpoint" {
 output "services_ipv4_cidr" {
     description = "The IP address range of the Kubernetes services in this cluster, in CIDR notation (e.g. 1.2.3.4/29). Service addresses are typically put in the last /16 from the container CIDR"
     value       = "${module.cluster.services_ipv4_cidr}"
+}
+
+output "tpu_ipv4_cidr_block" {
+    value = "${module.cluster.tpu_ipv4_cidr_block}"
 }
 
 output "certificate" {
