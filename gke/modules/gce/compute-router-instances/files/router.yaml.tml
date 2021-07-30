@@ -20,8 +20,9 @@ Authentication:
   Gcp:
     CredsPath: /root/auth.json
     ProjectID: ${authentication_gcp_project_id}
-  C3:
-    Token: ${c3_token}
+  # Project (Org) Name here
+  PROJECT:
+    Token: ${token}
 Encryption:
   Gcp:
     KeyringID: ${encryption_gcp_keyring_id}
@@ -54,7 +55,7 @@ Services:
   Netdata: ${services_netdata}
   Cadvisor: ${services_cadvisor}
   Bgp: ${services_bgp}
-  C3: ${services_c3}
+  PROJECT: ${services}
   IPam: false
   Prometheus: ${services_prometheus}
   Slack: ${services_slack}

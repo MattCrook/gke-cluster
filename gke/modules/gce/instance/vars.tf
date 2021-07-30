@@ -23,7 +23,7 @@ variable extra_scopes       { type = "list" default = [] }
 variable name               { type = "list" }
 variable type               { type = "list" }
 variable ipforward          { default = "false" }
-variable startup_script_url { default = "gs://cbsi-ops/instance-startup-scripts/null" }
+variable startup_script_url {}
 variable "instance_metadata" {
   type = "map"
   default = {}

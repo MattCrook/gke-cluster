@@ -2,36 +2,31 @@ variable project_name {}
 variable count {}
 
 variable zones {
-  type = "list"
+  type = list(string)
 }
 
 variable tags {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
 variable disk_image {
-  type = "list"
-
+  type = list(string)
   default = ["ubuntu-1804-bionic-v20181029"]
 }
 
 variable disk_size {
-  type = "list"
-
+  type = list(string)
   default = ["100"]
 }
 
 variable disk_type {
-  type = "list"
-
+  type = list(string)
   default = ["pd-ssd"]
 }
 
 variable disk_autodelete {
-  type = "list"
-
+  type = list(string)
   default = ["true"]
 }
 
@@ -47,8 +42,7 @@ variable serviceaccount {
 }
 
 variable serviceaccount_scopes {
-  type = "list"
-
+  type = list(string)
   default = [
     "https://www.googleapis.com/auth/compute",
     "https://www.googleapis.com/auth/logging.write",
@@ -58,16 +52,14 @@ variable serviceaccount_scopes {
 }
 
 variable extra_scopes {
-  type = "list"
-
+  type = list(string)
   default = ["compute-rw"]
 }
 
 variable name {}
 
 variable type {
-  type = "list"
-
+  type = list(string)
   default = ["n1-standard-4"]
 }
 
@@ -75,61 +67,45 @@ variable ipforward {
   default = "true"
 }
 
-variable startup_script_url {
-  default = "gs://cbsi-ops/instance-startup-scripts/null"
-}
+variable startup_script_url {}
 
 variable instance_metadata {
   type = "map"
-
   default = {}
 }
 
 variable region {}
 
 variable target_tags {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
 variable router_ssh_user {
-  default = "c3r"
+  default = "root"
 }
 
 variable router {}
-
-variable c3r_credentials {}
-
-variable discovery_record_vxlan {
-  default = "_cbsi.c3r.cbsicloud.com"
-}
-
-variable discovery_record_scope {
-  default = "_cbsi.c3r.cbsicloud.com"
-}
+variable credentials {}
+variable discovery_record_vxlan {}
+variable discovery_record_scope {}
 
 variable enable_bgp {
   default = "false"
 }
 
-variable vxlan_private_subnet {
-  default = "100.68.0.0/16"
-}
+variable vxlan_private_subnet {}
 
 variable vxlan_static_ip {
-  type = "list"
-
+  type = list(string)
   default = ["", ""]
 }
 
 variable upgrade_bucket {
-  default = "c3r-device-state"
+  default = "device-state"
 }
 
-variable authentication_gcp_project_id {
-  default = "i-core-services"
-}
+variable authentication_gcp_project_id {}
 
 variable authentication_aws_access_key {
   default = ""
@@ -144,11 +120,11 @@ variable authentication_aws_region {
 }
 
 variable encryption_gcp_keyring_id {
-  default = "c3router"
+  default = "router"
 }
 
 variable encryption_gcp_cryptokey_id {
-  default = "c3r-dev"
+  default = "dev"
 }
 
 variable encryption_gcp_location {
@@ -164,44 +140,24 @@ variable encryption_aws_region {
 }
 
 variable storage_gcp_bucket {
-  default = "c3r-device-state"
+  default = "device-state"
 }
 
 variable storage_aws_bucket {
-  default = "c3r-device-state"
+  default = "device-state"
 }
 
 variable storage_aws_region {
   default = "us-east-2"
 }
 
-variable registry_images_router {
-  default = "gcp.io/i-core-services/c3router:master"
-}
-
-variable registry_images_bgp {
-  default = "gcp.io/i-core-services/c3r-bgp:master"
-}
-
-variable registry_images_netdata {
-  default = "gcp.io/i-core-services/c3r-netdata:master"
-}
-
-variable registry_images_iperf {
-  default = "gcp.io/i-core-services/c3r-iperf:master"
-}
-
-variable registry_images_cadvisor {
-  default = "gcp.io/i-core-services/c3r-cadvisor:master"
-}
-
-variable registry_images_scheduler {
-  default = "gcp.io/i-core-services/c3r-scheduler:master"
-}
-
-variable registry_server_address {
-  default = "gcp.io/i-core-services"
-}
+variable registry_images_router {}
+variable registry_images_bgp {}
+variable registry_images_netdata {}
+variable registry_images_iperf {}
+variable registry_images_cadvisor {}
+variable registry_images_scheduler {}
+variable registry_server_address {}
 
 variable services_vxlan {
   default = "true"
@@ -260,7 +216,7 @@ variable services_configs_bgp_asn {
 }
 
 variable services_configs_bgp_redistribute {
-  type = "list"
+  type = list(string)
 
   default = []
 }
@@ -270,19 +226,17 @@ variable services_configs_bgp_accepted_community_strings {
 }
 
 variable services_configs_bgp_rejected_community_strings {
-  type = "list"
+  type = list(string)
 
   default = []
 }
 
 variable services_configs_bgp_accepted_prefix {
-  type = "list"
-
-  default = ["100.68.0.0/16"]
+  type = list(string)
 }
 
 variable services_configs_bgp_rejected_prefix {
-  type = "list"
+  type = list(string)
 
   default = []
 }
@@ -296,8 +250,7 @@ variable services_configs_nat_interface {
 }
 
 variable services_configs_routes_static {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
@@ -306,20 +259,17 @@ variable services_configs_ha_routes {
 }
 
 variable services_configs_routes_bgp {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
-variable c3_migration {
+variable migration {
   default = "false"
 }
 
-variable c3_token {
-  default = "8bfa00c4594d9ab25308ddc1567f1abe87d94bff"
-}
+variable token {}
 
-variable services_c3 {
+variable services {
   default = "false"
 }
 
@@ -327,9 +277,7 @@ variable services_configs_slack_webhook {
   default = ""
 }
 
-variable services_configs_slack_channel {
-  default = "i-techops-c3router"
-}
+variable services_configs_slack_channel {}
 
 variable services_configs_router_memory {
   default = "4g"
@@ -359,9 +307,7 @@ variable services_configs_snmp_rocommunity {
   default = ""
 }
 
-variable vxlan_environment {
-  default = "core-services"
-}
+variable vxlan_environment {}
 
 variable services_configs_loadbalancer {
   default = ""
@@ -400,13 +346,13 @@ variable services_configs_routes {
 }
 
 variable bgp_advertise_routes {
-  type = "list"
+  type = list(string)
 
   default = []
 }
 
 variable advertised_community_strings {
-  type = "list"
+  type = list(string)
 
   default = []
 }
@@ -420,7 +366,7 @@ variable content_type {
 }
 
 variable static_routes {
-  type = "list"
+  type = list(string)
 
   default = []
 }
@@ -430,24 +376,22 @@ variable services_configs_hostapd {
 }
 
 variable bgp_prefix_list {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
 variable bgp_community_strings {
-  type = "list"
+  type = list(string)
 
   default = []
 }
 
-variable c3r_backplane {
+variable backplane {
   default = "false"
 }
 
 variable gcp_advertise_routes {
-  type = "list"
-
+  type = list(string)
   default = []
 }
 
@@ -485,18 +429,7 @@ variable high_availability {
   default = "true"
 }
 
-variable kubernetes_peer {
-  default = ""
-}
-
-variable gcp_private_bridge {
-  default = ""
-}
-
-variable serial_number {
-  default = ""
-}
-
-variable services_configs_ipsla {
-  default = ""
-}
+variable kubernetes_peer {}
+variable gcp_private_bridge {}
+variable serial_number {}
+variable services_configs_ipsla {}

@@ -11,6 +11,11 @@ output "private_subnet_address" {
 output "public_subnet_self_link" {
     value = "${module.subnetworks.public_subnet_self_link}"
 }
+
 output "public_subnet_address" {
     value = "${module.subnetworks.public_subnet_address}"
+}
+
+output "firewall_self_link" {
+    value = "${module.vpc_firewall.firewall_self_link}"
 }

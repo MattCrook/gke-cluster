@@ -2,13 +2,14 @@ resource "google_sql_database_instance" "master" {
   project            = "${var.project_name}"
   name               = "${var.name}"
   database_version   = "${var.database_version}"
-  region = "${var.region}"
+  region             = "${var.region}"
 
   settings {
-    tier                        = "${var.instance_type}"
+    tier = "${var.instance_type}"
+
     ip_configuration {
-        ipv4_enabled = true
-        require_ssl = "${var.require_ssl}"
+        ipv4_enabled        = true
+        require_ssl         = "${var.require_ssl}"
         authorized_networks = ["${var.authorize_networks}"]
     }
 
@@ -18,13 +19,13 @@ resource "google_sql_database_instance" "master" {
 
     backup_configuration {
         binary_log_enabled = "${var.binary_log}"
-        enabled = "${var.backup_enabled}"
-        start_time = "${var.backup_time}"
+        enabled            = "${var.backup_enabled}"
+        start_time         = "${var.backup_time}"
     }
 
-    disk_autoresize             = "${var.disk_resize}"
-    disk_size                   = "${var.disk_size}"
-    database_flags              = ["${var.database_flags}"]
+    disk_autoresize = "${var.disk_resize}"
+    disk_size       = "${var.disk_size}"
+    database_flags  = ["${var.database_flags}"]
   }
 }
 

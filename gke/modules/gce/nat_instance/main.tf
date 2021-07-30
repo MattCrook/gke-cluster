@@ -4,35 +4,35 @@ resource "random_id" "tag" {
 
 module "instance" {
     source = "../instance"
-    project_name = "${var.project}"
-    name = ["${var.name}"]
-    count = "${var.count}"
-    zones = ["${var.zones}"]
-    type = ["${var.type}"]
-    disk_image = ["${var.disk_image}"]
-    subnetwork = "${var.subnetwork}"
+    project_name       = "${var.project}"
+    name               = ["${var.name}"]
+    count              = "${var.count}"
+    zones              = ["${var.zones}"]
+    type               = ["${var.type}"]
+    disk_image         = ["${var.disk_image}"]
+    subnetwork         = "${var.subnetwork}"
     subnetwork_project = "${var.project}"
-    address = ["${var.address}"]
-    external_ip = ["${google_compute_address.default.address}"]
-    tags = ["${var.name}-${var.zones}-${random_id.tag.hex}"]
-    ipforward = "true"
-    startup_script_url = "gs://cbsi-xpn/files/global/startup-script"
-    serviceaccount = "${var.serviceaccount}"
+    address            = ["${var.address}"]
+    external_ip        = ["${google_compute_address.default.address}"]
+    tags               = ["${var.name}-${var.zones}-${random_id.tag.hex}"]
+    ipforward          = "true"
+    startup_script_url = ""
+    serviceaccount     = "${var.serviceaccount}"
 }
 
 resource "google_compute_route" "nat-gateway" {
-  project     = "${var.project}"
-  name        = "${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}-route"
-  dest_range  = "0.0.0.0/0"
-  network     = "${var.network}"
-  next_hop_instance = "${element(module.instance.name, 0)}"
+  project                = "${var.project}"
+  name                   = "${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}-route"
+  dest_range             = "0.0.0.0/0"
+  network                = "${var.network}"
+  next_hop_instance      = "${element(module.instance.name, 0)}"
   next_hop_instance_zone = "${var.zones}"
-  tags        = ["${concat(var.tags)}"]
-  priority    = "${var.route_priority}"
+  tags                   = ["${concat(var.tags)}"]
+  priority               = "${var.route_priority}"
 }
 
 resource "google_compute_firewall" "nat-gateway" {
-  project     = "${var.project}"
+  project = "${var.project}"
   name    = "allow-${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}"
   network = "${var.network}"
 
@@ -46,22 +46,9 @@ resource "google_compute_firewall" "nat-gateway" {
 
 resource "google_compute_address" "default" {
   project = "${var.project}"
-  region = "${var.region}"
-  name = "nat-${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}"
+  region  = "${var.region}"
+  name    = "nat-${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}"
 }
-
-#resource "google_compute_firewall" "nat-gateway-pvs" {
-#  project     = "${var.project}"
-#  name    = "allow-${var.name}-${replace(var.zones, "/^(..).*-(.).*(.)-.*(.)$/", "$1$2$3$4")}-pvs"
-#  network = "${var.network}"
-
-#  allow {
-#    protocol = "tcp"
-#    ports    = ["8835"]
-#  }
-#
-#  target_tags = ["${var.name}-${var.zones}-${random_id.tag.hex}"]
-#}
 
 // Route for GKE so that traffic to the master goes through the default gateway.
 // This fixes things like kubectl exec and logs

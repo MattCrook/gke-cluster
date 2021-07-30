@@ -29,7 +29,7 @@ variable "zones" {
 
 variable "tags" {
   description = "Additional compute instance network tags to apply route to."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 

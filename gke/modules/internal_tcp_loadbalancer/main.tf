@@ -23,10 +23,17 @@ resource "google_compute_region_backend_service" "default" {
   health_checks    = ["${google_compute_health_check.default.self_link}"]
 }
 
+# Health Check with logging enabled
 resource "google_compute_health_check" "default" {
   project               = "${var.project}"
   name                  = "${var.name}-health-check"
+  description           = "Health check via http"
+
   tcp_health_check {
     port                = "${var.check_port}"
+  }
+
+  log_config {
+    enable = true
   }
 }

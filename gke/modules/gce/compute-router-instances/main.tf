@@ -56,7 +56,7 @@ resource "google_compute_instance" "instance" {
   }
 
   metadata {
-    sshKeys = "${var.router_ssh_user}:${file("${path.module}/files/c3r_id_rsa.pub")}"
+    sshKeys = "${var.router_ssh_user}:${file("${path.module}/files/router_id_rsa.pub")}"
   }
 }
 
@@ -80,11 +80,11 @@ resource "random_uuid" "provisioner" {
     private_key = "${file("${var.router_ssh_key}")}"
     timeout     = "10m"
 
-    host = "${var.c3r_backplane == 1 ? element(google_compute_instance.instance.*.network_interface.0.address, count.index) : element(google_compute_address.mgmt.*.address, count.index)}"
+    host = "${var.backplane == 1 ? element(google_compute_instance.instance.*.network_interface.0.address, count.index) : element(google_compute_address.mgmt.*.address, count.index)}"
   }
 
   provisioner "file" {
-    content     = "${file("${var.c3r_credentials}")}"
+    content     = "${file("${var.credentials}")}"
     destination = "/root/auth.json"
   }
 
@@ -104,7 +104,7 @@ resource "random_uuid" "provisioner" {
       "sudo curl -fsSL get.docker.com -o get-docker.sh",
       "sudo chmod +x get-docker.sh",
       "sudo sh get-docker.sh",
-      "wget https://storage.googleapis.com/c3r-device-state/binary/router-amd64-${var.router_version}",
+      "wget https://storage.googleapis.com/router-device-state/binary/router-amd64-${var.router_version}",
       "sudo mv router-amd64-${var.router_version} /usr/bin/router",
       "sudo chmod +x /usr/bin/router",
       "sudo /usr/bin/router join version",
@@ -129,8 +129,8 @@ data "template_file" "router_yaml" {
     serial_number                                 = "${replace(element(random_uuid.sn.*.result, count.index), "-", "")}"
     ha_set                                        = "${replace(random_uuid.ha.result, "-", "")}"
     high_availability                             = "${var.high_availability ? true : false }"
-    haadminup                             = "${var.high_availability ? true : false }"
-    c3_token                                      = "${var.c3_token}"
+    haadminup                                     = "${var.high_availability ? true : false }"
+    token                                         = "${var.token}"
     hosted_project                                = "${var.project_name}"
     ha_routes                                     = "${indent(8, var.service_configs_ha_routes)}"
     ip_address                                    = "${element(google_compute_instance.instance.*.network_interface.0.address, count.index)}"
@@ -159,7 +159,7 @@ data "template_file" "router_yaml" {
     services_ipsla                                = "${var.services_ipsla ? true : false }"
     services_slack                                = "${var.services_slack ? true : false }"
     services_scope                                = "${var.services_scope ? true : false }"
-    services_c3                                   = "${var.services_c3 ? true : false }"
+    services                                      = "${var.services ? true : false }"
     services_nat                                  = "${var.services_nat ? true : false }"
     services_hostapd                              = "${var.services_hostapd ? true : false }"
     services_loadbalancer                         = "${var.services_loadbalancer ? true : false }"
@@ -188,13 +188,13 @@ data "template_file" "router_yaml" {
     registry_images                               = "${indent(4, var.registry_images)}"
     ha_set                                        = "${replace(random_uuid.ha.result, "-", "")}"
     high_availability                             = "${var.high_availability ? true : false }"
-    c3_token                                      = "${var.c3_token}"
+    token                                         = "${var.token}"
     ha_routes                                     = "${indent(6, var.services_configs_ha_routes)}"
     ip_address                                    = "${element(google_compute_instance.instance.*.network_interface.0.address, count.index)}"
     instance_id                                   = "${element(google_compute_instance.instance.*.instance_id, count.index)}"
     region                                        = "${var.region}"
     zone                                          = "${element(var.zones, count.index)}"
-    services_c3                                   = "${var.services_c3 ? true : false }"
+    services                                      = "${var.services ? true : false }"
   }
 }
 
@@ -278,7 +278,7 @@ resource "google_compute_firewall" "firewall-ssh" {
   target_service_accounts = ["${google_service_account.router_sa.email}"]
 }
 
-## c3router gcs config & state files
+## router gcs config & state files
 
 resource "google_storage_bucket_object" "config_object" {
   count        = "${var.count}"

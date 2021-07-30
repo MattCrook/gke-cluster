@@ -2,8 +2,6 @@ terraform {
     required_version = ">= 0.12"
 }
 
-# The google and google-beta provider blocks are used to configure the credentials you use to authenticate with GCP,
-# as well as a default project and location (zone and/or region) for your resources.
 provider "google" {
     project     = "${var.project}"
     region      = "${var.region}"

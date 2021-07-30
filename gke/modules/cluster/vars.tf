@@ -165,8 +165,6 @@ variable "oauth_scopes" {
 //   type = list(string)
 // }
 
-# variable startup_script_url { default = "gs://cbsi-ops/instance-startup-scripts/null" }
-
 // variable "tags" {
 //   description = "The list of instance tags applied to all nodes"
 //   type = list(string)
