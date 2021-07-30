@@ -85,3 +85,8 @@ output "gce_storage_disk_self_link" {
     description = "The URI of the created resource"
     value       = "${google_compute_disk.gce_persistant_disk.self_link}"
 }
+
+output "gce_storage_disk_name" {
+    description = "The name of the storagee disk"
+    value       = "${google_compute_disk.gce_persistant_disk.name}"
+}
