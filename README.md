@@ -33,6 +33,14 @@ Houses infrastructure for creating Google Storage Buckets, with corresponding IA
 
 This directory houses small apps I have made to containerize (with Docker) and deploy/ run on the GCP infrastructure created in Terraform. See the ReadMe in the App directory for more...
 
+## Live
+
+Houses the different environments to deploy to. Currently set up for:
+
+* `dev`
+* `staging`
+* `prod`
+
 ## Scripts
 
 Ad hoc scripts for developer tooling. Most scripts are not required and do not need to be run directly. They can be run from the Makefile in the root of this project. Description of the scripts below:
