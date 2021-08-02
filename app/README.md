@@ -7,16 +7,34 @@ This directory houses applications you that can be run locally, run in a Docker 
 
 ***Work in Progress***
 
+### Setup
+
+* Install dependencies from Go module:
+  * `make prep_go`
+
+
 ## Django
 
 ***Work in Progress***
+
+<!-- ### Setup
+
+* `make prep_django` -->
 
 
 ## Flask
 
 ***Work in Progress***
 
+<!-- ### Setup
+
+* `make prep_flask` -->
+
 
 ## Express/ Node.js
 
 ***Work in Progress***
+
+<!-- ### Setup
+
+* `make prep_node` -->
