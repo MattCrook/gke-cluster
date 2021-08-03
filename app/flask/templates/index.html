@@ -1,15 +1,116 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" />
     <title>Flask App</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="content">
-        <div>Flask App</div>
+      <div class="header">
+        <div class="title_container">
+          <div class="title">Flask App</div>
+        </div>
+        <div class="admin_dashboard_btn_wrapper">
+          <a class="admin_dashboard_btn" href="{{url_for('admin')}}">Admin Dashboard</a>
+        </div>
+        <div id="profile-button-container">
+          <div>
+            <div id="profile-button">
+              <img
+                class="user_image"
+                src="{{'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'}}"
+                style="z-index: 4"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="description_card">
+        <div class="card">
+          <div class="card_title">Flask App and API Using SqlAlchemy and Marshmallow</div>
+          <div class="description">
+            This is a simple Flask App, with a simple API that allows functionality of the form below, for demonstration
+            purposes.
+          </div>
+        </div>
+      </div>
+
+      <div id="main">
+        <div id="form_container">
+          <form class="form" method="POST">
+            {{csrf_token}}
+            <fieldset class="fieldset_container">
+              <input required class="input" id="name" type="text" name="name" />
+              <label class="label" for="name">Name</label>
+            </fieldset>
+            <fieldset class="fieldset_container">
+              <input required class="input" id="username" type="text" name="username" />
+              <label class="label" for="username">Username</label>
+            </fieldset>
+            <fieldset class="fieldset_container">
+              <input required class="input" id="favorite_tech" type="text" name="favorite_tech" />
+              <label class="label" for="favorite_tech">Favorite Tech</label>
+            </fieldset>
+            <fieldset class="fieldset_container">
+              <input class="input" id="description" type="text" name="description" />
+              <label class="label" for="description">Favorite Tech Description (*Optional)</label>
+            </fieldset>
+            <input class="submit_btn" id="submit" type="submit" value="SUBMIT" />
+          </form>
+        </div>
+
+        {% if is_users %}
+        <div id="results_container">
+            {% else %}
+            <div id="results_container" style="display: none;">
+                {% endif %}
+          <div class="results_header_wrapper">
+            <div class="column_wrapper">
+              <div class="results_heading">Name</div>
+              <div class="column">
+                {% for user in users %}
+                <div class="results_body">{{user.name}}</div>
+                {% endfor%}
+              </div>
+            </div>
+
+            <div class="column_wrapper">
+              <div class="results_heading">Username</div>
+              <div class="column">
+                {% for user in users %}
+                <div class="results_body">{{user.username}}</div>
+                {% endfor%}
+              </div>
+            </div>
+
+            <div class="column_wrapper">
+              <div class="results_heading">Favorite Tech</div>
+              <div class="column">
+                {% for favorite_tech in all_tech %}
+                <div class="results_body">{{favorite_tech.name}} </div>
+                {% endfor%}
+              </div>
+            </div>
+
+            <div class="column_wrapper">
+              <div class="results_heading">Favorite Tech Description</div>
+              <div class="column">
+                {% for favorite_tech in all_tech %}
+                <div class="results_body">{{favorite_tech.description}} </div>
+                {% endfor%}
+            </div>
+        </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+
+    <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
+  </body>
 </html>

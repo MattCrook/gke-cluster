@@ -1,4 +1,4 @@
-from flask import Flask, Request, jsonify, request, render_template
+from flask import Flask, Request, jsonify, request, render_template, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
@@ -12,6 +12,7 @@ import json
 
 
 app = Flask(__name__)
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
@@ -21,21 +22,27 @@ migrate = Migrate(app, db)
 
 class User(db.Model):
     __tablename__ = "users"
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=True)
     username = db.Column(db.String(400), nullable=True)
+    favorite_tech = db.Column(db.Integer, db.ForeignKey("favorite_tech.id"))
 
     def __repr__(self):
         return f'{self.name}'
 
 class FavoriteTech(db.Model):
     __tablename__ = "favorite_tech"
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=True)
     description = db.Column(db.String(400), nullable=True)
+    users = db.relationship("User", backref="users")
 
     def __repr__(self):
         return f'{self.name}'
+
+
 
 
 class UserSchema(ma.Schema):
@@ -43,16 +50,15 @@ class UserSchema(ma.Schema):
         model = User
         fields = ('id', 'name', 'username', 'favorite_tech')
 
-
 class FavoriteTechSchema(ma.Schema):
     class Meta:
         model = FavoriteTech
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'users')
 
 
 
 @app.route('/api/users', methods=['GET', 'POST'])
-def user_list():
+def users():
     if request.method == 'GET':
         all_users = User.query.all()
         users_schema = UserSchema(many=True)
@@ -62,26 +68,70 @@ def user_list():
     elif request.method == 'POST':
         req_data = json.loads(request.data)
         name = req_data['name']
-        description = req_data['description']
+        username = req_data['username']
+        favorite_tech = req_data['favoriteTech']
 
         new_user = User()
         new_user.name = name
-        new_user.description = description
+        new_user.username = username
+
+        if db.session.query(FavoriteTech).filter(FavoriteTech.name == favorite_tech).first():
+            new_favorite_tech = db.session.query(FavoriteTech).filter(FavoriteTech.name == favorite_tech).first()
+        else:
+            new_favorite_tech = FavoriteTech()
+            new_favorite_tech.name = favorite_tech
+            description = req_data['description'] if 'description' in req_data and req_data['description'] else "none"
+            new_favorite_tech.description = description
+
+        db.session.add(new_favorite_tech)
+        db.session.commit()
+
+        new_user.favorite_tech = new_favorite_tech.id
 
         db.session.add(new_user)
         db.session.commit()
+
         user_schema = UserSchema()
         return user_schema.jsonify(new_user)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/ready', methods=['GET'])
+def ready():
+    return Response("{'message':'Healthy'}", status=200, mimetype='application/json')
 
+
+
+####################
+# App Routes
+####################
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    all_users = db.session.query(User).all()
+    all_tech = db.session.query(FavoriteTech).all()
+    is_users = len(all_users) > 0
+    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech)
+
+@app.route('/admin', methods=['GET'])
+def admin():
+    return 'admin/master.html'
+
+
+###################
+# Flask Admin Site
+###################
+
+class UserModelView(ModelView):
+    column_searchable_list = ['name', 'username']
+    column_filters = ['name']
+
+class FavoriteTechModelView(ModelView):
+    column_searchable_list = ['name']
+    column_filters = ['name']
 
 admin = Admin(app, name='Flask App Admin', template_mode='bootstrap3')
-# admin.add_view(ModelView(User, db.session))
-# admin.add_view(ModelView(FavoriteTech, db.session))
+admin.add_view(UserModelView(User, db.session))
+admin.add_view(FavoriteTechModelView(FavoriteTech, db.session))
 
 
 if __name__ == "__main__":

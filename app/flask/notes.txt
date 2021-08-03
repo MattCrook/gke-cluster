@@ -1,0 +1,17 @@
+pip install -U flask-sqlalchemy marshmallow-sqlalchemy
+
+
+flask db init
+flask db migrate -m "Initial migration."
+flask db upgrade
+db.create_all()
+flask run
+
+
+curl http://localhost:5000/api/users -X POST -H "Content-Type: application/json" -d '{"name": "Matt", "username": "matt11", "favorite_tech": "Kubernetes"}'
+
+docker build -t flask_app_and_api .
+docker run -it -d -p 5000:5000 flask_app_and_api
+
+docker tag flask_app_and_api:latest mgcrook11/flask-app-api:1.0
+docker push mgcrook11/flask-app-api:1.0

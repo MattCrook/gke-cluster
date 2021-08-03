@@ -1,0 +1,4 @@
+pipenv install
+pipenv install django
+pipenv run django-admin startproject project
+pipenv run python3 manage.py startapp app

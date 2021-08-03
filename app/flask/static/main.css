@@ -1,0 +1,253 @@
+:root {
+  --ui-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 4px 5px 0 rgba(0, 0, 0, 0.06), 0 1px 10px 0 rgba(0, 0, 0, 0.08);
+  fill: rgba(0, 0, 0, 0.54);
+  --ui-shadow-border: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(26, 26, 26, 0.904);
+  box-shadow: 0px 6px 4px 0px rgb(190, 190, 190);
+}
+
+.title_container {
+  display: flex;
+  margin-left: 2%;
+}
+
+.admin_dashboard_btn_wrapper {
+  display: flex;
+}
+
+.title {
+  font: 150 1.2em helvetica neue, open sans, sans-serif;
+  color: white;
+  text-transform: uppercase;
+}
+
+.admin_dashboard_btn {
+  padding: 5px 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 16px;
+  padding-left: 15px;
+  color: rgb(236, 236, 236);
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.admin_dashboard_btn::before {
+  content: "";
+  position: absolute;
+  bottom: 0%;
+  left: 0px;
+  width: 100%;
+  height: 1px;
+  background: rgb(209, 209, 209);
+  display: block;
+  -webkit-transform-origin: right top;
+  -ms-transform-origin: right top;
+  transform-origin: right top;
+  -webkit-transform: scale(0, 1);
+  -ms-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: transform 0.4s cubic-bezier(1, 0, 0, 1);
+  transition: transform 0.4s cubic-bezier(1, 0, 0, 1);
+}
+
+.admin_dashboard_btn:hover::before {
+  color: rgb(221, 221, 221);
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
+  transform-origin: left top;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+#profile-button-container {
+  margin-right: 2%;
+}
+.user_image {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  margin-right: 3px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.card {
+  margin-top: 4%;
+  padding: 30px;
+  width: 40%;
+  border-bottom: var(--ui-shadow-border);
+  box-shadow: var(--ui-shadow);
+  border-radius: 3px 3px 3px 3px;
+}
+
+.card_title {
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 14px;
+}
+
+/* Form */
+
+/* .form_container {
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+#form_container {
+  width: 26%;
+}
+
+.form {
+  /* width: 28%; */
+  width: 100%;
+  flex-direction: column;
+  border-bottom: var(--ui-shadow-border);
+  box-shadow: var(--ui-shadow);
+  padding: 20px 20px;
+  margin-top: 5%;
+  /* margin-left: 37%; */
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic);
+
+.fieldset_container {
+  margin-bottom: 2rem;
+  position: relative;
+  border: none;
+}
+.fieldset_container input {
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 2px solid #999;
+  color: #999;
+  transition: all ease-in 0.5s;
+}
+.fieldset_container input:focus,
+.fieldset_container input:active {
+  outline: none;
+  border-bottom: 2px solid cornflowerblue;
+  color: cornflowerblue;
+}
+.fieldset_container input:focus + label,
+.fieldset_container input:active + label {
+  top: -0.5rem;
+  color: cornflowerblue;
+  transform: translateY(-8%) scale(1.125);
+  font-style: normal;
+}
+.fieldset_container input.filled {
+  color: cornflowerblue;
+  border-color: cornflowerblue;
+}
+.fieldset_container input.filled + label {
+  top: -0.5rem;
+  color: cornflowerblue;
+  transform: translateY(-8%) scale(1.125);
+  font-style: normal;
+}
+.fieldset_container label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: all ease-in-out 0.5s;
+  color: #999;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.fieldset_container label::-moz-selection {
+  background: transparent;
+}
+.fieldset_container label::selection {
+  background: transparent;
+}
+
+input[type="submit"] {
+  padding: 0.5em;
+  color: #999;
+  background: transparent;
+  border: 2px solid #999;
+  transition: all ease-in-out 0.5s;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 3%;
+}
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  color: cornflowerblue;
+  border-color: cornflowerblue;
+  outline: none;
+}
+input[type="submit"]:click {
+  background-color: cornflowerblue;
+}
+
+#results_container {
+  width: 40%;
+  font-family: "Merriweather Sans", sans-serif;
+}
+
+.results_heading {
+  font-size: 16px;
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+
+.results_body {
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+
+.results_header_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 5%;
+  border-bottom: var(--ui-shadow-border);
+  box-shadow: var(--ui-shadow);
+  border-radius: 3px 3px 3px 3px;
+}
+
+.column_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#main {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5%;
+}

@@ -1,0 +1,27 @@
+# This pod uses the GCE PersistentDisk not directly but through a PV and PVC.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    app: flask-app
+    name: postgres
+spec:
+  containers:
+  - name: postgres
+    image: postgres
+    volumeMounts:
+      - name: postgres-data
+        mountPath: /var/lib/pgsql/data
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 5432
+        protocol: TCP
+  volumes:
+    - name: postgres-data
+      # Referencing the PersistentVolumeClaim by name in the pod volume
+      persistentVolumeClaim:
+        claimName: postgres-pvc

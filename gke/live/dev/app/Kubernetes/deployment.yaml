@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: flask-app
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      # how many pods are replaced at once during the deployments rolling update.
+      # maxSurge - determines how many pod instances you allow to exist above the desired replica count configured on the Deployment.
+      maxSurge: 1
+      # set to 0 to make pods replace one by one.
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: flask-app-api-pod
+      labels:
+        app: flask-app
+    spec:
+      imagePullSecrets:
+      - name: flaskappdockerhubsecret
+      containers:
+      - image: mgcrook11/flask-app-api:1.1
+        name: flask-app-api
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 128m
+            memory: 500Mi
+          requests:
+            cpu: 128m
+            memory: 500Mi
+        # volumeMounts:
+        #   - name: downward
+        #     mountPath: /etc/downward
+        #   - name: certs
+        #     mountPath: /etc/certs/
+        #     readOnly: true
+        ports:
+          - containerPort: 5000
+            # hostPort: 5000
+            protocol: TCP
+        readinessProbe:
+          # readiness probe will be executed every 5 seconds.
+          periodSeconds: 5
+          initialDelaySeconds: 5
+          httpGet:
+            path: /ready
+            port: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 10
+      # volumes:
+      # - name: downward
+      #   downwardAPI:
+      #     items:
+      #     # The pod's name (from the metadata.name field in the manifest) will be written to the podName file.
+      #     - path: "podName"
+      #       fieldRef:
+      #         fieldPath: metadata.name
+      #     - path: "podNamespace"
+      #       fieldRef:
+      #         fieldPath: metadata.namespace
+      #       # The pod's labels will be written to the /etc/downward/labels file
+      #     - path: "labels"
+      #       fieldRef:
+      #         fieldPath: metadata.labels
+      #       # The pod's annotations will be written to the /etc/downward/annotations file.
+      #     - path: "annotations"
+      #       fieldRef:
+      #         fieldPath: metadata.annotations
+      #     - path: "containerCpuRequestMilliCores"
+      #       resourceFieldRef:
+      #         # Container name must be specified when exposing container level metadata such as resource limit or requests like this using resourceFieldRef.
+      #         containerName: main
+      #         resource: requests.cpu
+      #         divisor: 1m
+      #     - path: "containerMemoryLimitBytes"
+      #       resourceFieldRef:
+      #         containerName: main
+      #         resource: limits.memory
+      #         divisor: "1"
+      # - name: certs
+      #   secret:
+      #     secretName: https
