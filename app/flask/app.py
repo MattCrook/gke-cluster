@@ -131,7 +131,7 @@ def index():
     all_users = db.session.query(User).all()
     all_tech = db.session.query(FavoriteTech).all()
     is_users = len(all_users) > 0
-    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME)
+    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME, POD_NAMESPACE=POD_NAMESPACE)
 
 @app.route('/admin', methods=['GET'])
 def admin():

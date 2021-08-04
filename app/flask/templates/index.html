@@ -37,8 +37,12 @@
             This is a simple Flask App, with a simple API that allows functionality of the form below, for demonstration
             purposes.
           </div>
+          <div class="description_sub">
+            Your request was routed from the LoadBalancer from which exposed the external IP, into the cluster onto one of the nodes, and into a pod running on that node where this app is running on port 5000.
+          </div>
           <div class="pod_metadata">This Current Pod's Metadata:</div>
           <div class="metadata">Pod Name: {{POD_NAME}}</div>
+          <div class="metadata">Pod Namespace: {{POD_NAMESPACE}}</div>
           <div class="metadata">Pod IP: {{POD_IP}}</div>
           <div class="metadata">Node Name: {{NODE_NAME}}</div>
           <div class="metadata">Service Account of pod: {{POD_SERVICE_ACCOUNT_NAME}}</div>
