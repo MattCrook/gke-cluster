@@ -36,4 +36,5 @@ RUN flask db upgrade
 
 EXPOSE 5000
 
+# The main purpose of a CMD is to provide defaults for an executing container.
 CMD ["flask", "run", "--host", "0.0.0.0"]

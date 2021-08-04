@@ -1,0 +1,14 @@
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+kubectl proxy
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+config file
+
+kubectl exec -it <POD> -- /bin/bash
+*apt update
+*apt upgrade
+apt add curl or apt install curl
+
+
+kubectl port-forward <POD> 5000:5000 &
+kubectl exec flask-app-deployment-566fd4676c-87jx7 -- ls -lA /etc/downward
+kubectl exec flask-app-deployment-566fd4676c-87jx7 -- cat /etc/downward/annotations

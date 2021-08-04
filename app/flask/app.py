@@ -10,26 +10,30 @@ from config import Config
 from dotenv import load_dotenv
 import json
 import os
-
-# env = open(".env", "r")
-# print(env.read())
-
+import os.path
+from os import path
 load_dotenv()
 
-
-FLASK_APP = os.getenv('FLASK_APP')
-FLASK_ENV = os.getenv('FLASK_ENV')
-SECRET_KEY = os.getenv('SECRET_KEY')
-DATABASE = os.getenv('DATABASE')
 
 POD_NAME = os.environ.get('POD_NAME')
 POD_NAMESPACE = os.environ.get('POD_NAMESPACE')
 # LABELS = os.environ.get('LABELS')
 # ANNOTATIONS = os.environ.get('ANNOTATIONS')
 # CONTAINER_REQUEST_CPU = os.environ.get('CONTAINER_CPU_REQUEST_MILLICORES')
+
+if os.path.isdir('/etc/downward'):
+    CONTAINER_REQUEST_CPU = open("/etc/downward/containerCpuRequestMilliCores", "r").read()
+    LABELS = open("/etc/downward/labels", "r").read()
+    ANNOTATIONS = open("/etc/downward/annotations", "r").read()
+else:
+    CONTAINER_REQUEST_CPU = "N/A"
+    LABELS = "N/A"
+    ANNOTATIONS = "N/A"
+
 NODE_NAME = os.environ.get('NODE_NAME')
 POD_IP = os.environ.get('POD_IP')
 POD_SERVICE_ACCOUNT_NAME = os.environ.get('SERVICE_ACCOUNT')
+
 
 
 app = Flask(__name__)
@@ -131,7 +135,7 @@ def index():
     all_users = db.session.query(User).all()
     all_tech = db.session.query(FavoriteTech).all()
     is_users = len(all_users) > 0
-    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME, POD_NAMESPACE=POD_NAMESPACE)
+    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME, POD_NAMESPACE=POD_NAMESPACE, CONTAINER_REQUEST_CPU=CONTAINER_REQUEST_CPU, LABELS=LABELS, ANNOTATIONS=ANNOTATIONS)
 
 @app.route('/admin', methods=['GET'])
 def admin():

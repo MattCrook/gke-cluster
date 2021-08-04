@@ -108,26 +108,17 @@
 
 /* Form */
 
-/* .form_container {
-  font-family: "Open Sans", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 #form_container {
   width: 26%;
 }
 
 .form {
-  /* width: 28%; */
   width: 100%;
   flex-direction: column;
   border-bottom: var(--ui-shadow-border);
   box-shadow: var(--ui-shadow);
   padding: 20px 20px;
   margin-top: 5%;
-  /* margin-left: 37%; */
 }
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic);
@@ -250,6 +241,7 @@ input[type="submit"]:click {
   display: flex;
   justify-content: space-evenly;
   margin-top: 3%;
+  margin-bottom: 3%;
 }
 
 .pod_metadata {
@@ -269,5 +261,4 @@ input[type="submit"]:click {
   margin-top: 3%;
   font-family: "Merriweather Sans", sans-serif;
   font-size: 13px;
-
 }

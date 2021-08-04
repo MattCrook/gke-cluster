@@ -7,3 +7,6 @@ get_all_resources_in_cluster:
 
 run_app:
 	# cd into app dir and run command to start app locally
+
+kubernetes_dashboard:
+	@chmod +x ./scripts/kubernetes_dashboard.sh && ./scripts/get_all_resources.sh

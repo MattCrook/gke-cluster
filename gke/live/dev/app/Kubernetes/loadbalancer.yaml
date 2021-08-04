@@ -12,5 +12,3 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 5000
-    # Target port of nodeport service that will send traffic to pod
-    # nodePort: 32457

@@ -7,13 +7,11 @@ spec:
     matchLabels:
       app: flask-app
   replicas: 2
-  minReadySeconds: 10
+  # minReadySeconds: 2
   strategy:
     rollingUpdate:
       # how many pods are replaced at once during the deployments rolling update.
-      # maxSurge - determines how many pod instances you allow to exist above the desired replica count configured on the Deployment.
       maxSurge: 1
-      # set to 0 to make pods replace one by one.
       maxUnavailable: 0
     type: RollingUpdate
   template:
@@ -25,9 +23,29 @@ spec:
       imagePullSecrets:
       - name: flaskappdockerhubsecret
       containers:
-      - image: mgcrook11/flask-app-api:1.1
+      - image: mgcrook11/flask-app-api:1.5
         name: flask-app-api
         imagePullPolicy: Always
+        # command: ["/bin/sh","-c"]
+        # args:
+        #   - while true; do
+        #       echo -en '\n';
+        #       if [[ -e /etc/downward/labels ]]; then
+        #         echo -en '\n'; cat /etc/downward/labels; fi;
+        #       if [[ -e /etc/downward/annotations ]]; then
+        #         echo -en '\n'; cat /etc/downward/annotations; fi;
+        #       if [[ -e /etc/downward/podName ]]; then
+        #         echo -en '\n'; cat /etc/downward/podName; fi;
+        #       if [[ -e /etc/downward/containerCpuRequestMilliCores ]]; then
+        #         echo -en '\n'; cat /etc/downward/containerCpuRequestMilliCores; fi;
+        #       if [[ -e /etc/downward/containerMemoryLimitBytes ]]; then
+        #         echo -en '\n'; cat /etc/downward/containerMemoryLimitBytes; fi;
+        #       if [[ -e /etc/downward/podIP ]]; then
+        #         echo -en '\n'; cat /etc/downward/podIP; fi;
+        #       if [[ -e /etc/downward/podServiceAccountName ]]; then
+        #         echo -en '\n'; cat /etc/downward/podServiceAccountName; fi;
+        #       sleep 5;
+        #     done;
         resources:
           limits:
             cpu: 128m
@@ -35,20 +53,44 @@ spec:
           requests:
             cpu: 128m
             memory: 500Mi
-        # volumeMounts:
-        #   - name: downward
-        #     mountPath: /etc/downward
-        #   - name: certs
-        #     mountPath: /etc/certs/
-        #     readOnly: true
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
+        volumeMounts:
+          - name: downward
+            mountPath: /etc/downward
+            readOnly: false
+          # - name: certs
+          #   mountPath: /etc/certs/
+          #   readOnly: true
         ports:
           - containerPort: 5000
-            # hostPort: 5000
             protocol: TCP
         readinessProbe:
           # readiness probe will be executed every 5 seconds.
-          periodSeconds: 5
-          initialDelaySeconds: 5
+          periodSeconds: 6
+          # An initial delay to start probe to ensure app is booted up
+          initialDelaySeconds: 15
+          # The probe must return a response within this time frame
+          timeoutSeconds: 3
           httpGet:
             path: /ready
             port: 5000
@@ -56,37 +98,51 @@ spec:
           httpGet:
             path: /
             port: 5000
-          initialDelaySeconds: 10
-      # volumes:
-      # - name: downward
-      #   downwardAPI:
-      #     items:
-      #     # The pod's name (from the metadata.name field in the manifest) will be written to the podName file.
-      #     - path: "podName"
-      #       fieldRef:
-      #         fieldPath: metadata.name
-      #     - path: "podNamespace"
-      #       fieldRef:
-      #         fieldPath: metadata.namespace
-      #       # The pod's labels will be written to the /etc/downward/labels file
-      #     - path: "labels"
-      #       fieldRef:
-      #         fieldPath: metadata.labels
-      #       # The pod's annotations will be written to the /etc/downward/annotations file.
-      #     - path: "annotations"
-      #       fieldRef:
-      #         fieldPath: metadata.annotations
-      #     - path: "containerCpuRequestMilliCores"
-      #       resourceFieldRef:
-      #         # Container name must be specified when exposing container level metadata such as resource limit or requests like this using resourceFieldRef.
-      #         containerName: main
-      #         resource: requests.cpu
-      #         divisor: 1m
-      #     - path: "containerMemoryLimitBytes"
-      #       resourceFieldRef:
-      #         containerName: main
-      #         resource: limits.memory
-      #         divisor: "1"
+          initialDelaySeconds: 20
+          timeoutSeconds: 3
+      # - image: nginx
+      #   name: nginx
+      #   resources:
+      #     limits:
+      #       cpu: 128m
+      #       memory: 500Mi
+      #     requests:
+      #       cpu: 128m
+      #       memory: 500Mi
+      #   volumeMounts:
+      #     - mountPath: /usr/share/nginx/html
+      #       name: downward
+      #       readOnly: true
+      #   ports:
+      #     - containerPort: 80
+      #       protocol: TCP
+      volumes:
+      - name: downward
+        downwardAPI:
+          items:
+          - path: "podName"
+            fieldRef:
+              fieldPath: metadata.name
+          - path: "podNamespace"
+            fieldRef:
+              fieldPath: metadata.namespace
+          - path: "labels"
+            fieldRef:
+              fieldPath: metadata.labels
+          - path: "annotations"
+            fieldRef:
+              fieldPath: metadata.annotations
+          - path: "containerCpuRequestMilliCores"
+            resourceFieldRef:
+              # Container name must be specified when exposing container level metadata such as resource limit or requests like this using resourceFieldRef.
+              containerName: flask-app-api
+              resource: requests.cpu
+              divisor: 1m
+          - path: "containerMemoryLimitBytes"
+            resourceFieldRef:
+              containerName: flask-app-api
+              resource: limits.memory
+              divisor: "1"
       # - name: certs
       #   secret:
       #     secretName: https
