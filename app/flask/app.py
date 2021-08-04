@@ -7,8 +7,29 @@ from flask_admin import Admin
 from flask_bcrypt import Bcrypt
 from sqlalchemy.engine import result
 from config import Config
+from dotenv import load_dotenv
 import json
+import os
 
+# env = open(".env", "r")
+# print(env.read())
+
+load_dotenv()
+
+
+FLASK_APP = os.getenv('FLASK_APP')
+FLASK_ENV = os.getenv('FLASK_ENV')
+SECRET_KEY = os.getenv('SECRET_KEY')
+DATABASE = os.getenv('DATABASE')
+
+POD_NAME = os.environ.get('POD_NAME')
+POD_NAMESPACE = os.environ.get('POD_NAMESPACE')
+# LABELS = os.environ.get('LABELS')
+# ANNOTATIONS = os.environ.get('ANNOTATIONS')
+# CONTAINER_REQUEST_CPU = os.environ.get('CONTAINER_CPU_REQUEST_MILLICORES')
+NODE_NAME = os.environ.get('NODE_NAME')
+POD_IP = os.environ.get('POD_IP')
+POD_SERVICE_ACCOUNT_NAME = os.environ.get('SERVICE_ACCOUNT')
 
 
 app = Flask(__name__)
@@ -110,7 +131,7 @@ def index():
     all_users = db.session.query(User).all()
     all_tech = db.session.query(FavoriteTech).all()
     is_users = len(all_users) > 0
-    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech)
+    return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME)
 
 @app.route('/admin', methods=['GET'])
 def admin():

@@ -251,3 +251,14 @@ input[type="submit"]:click {
   justify-content: space-evenly;
   margin-top: 5%;
 }
+
+.pod_metadata {
+  margin-top: 3%;
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 12px;
+}
+
+.metadata {
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: 12px;
+}
