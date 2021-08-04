@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# chmod +x get_all_resources.sh
-
 OUTPUT=$(kubectl api-resources -o name)
 DIR="../resources"
 
