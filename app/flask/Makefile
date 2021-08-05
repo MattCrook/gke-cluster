@@ -1,4 +1,14 @@
 SHELL:= /bin/bash
+DOCKERHUB_REPO := mgcrook11/flask-app-api
+
+prep:
+	pipenv install --dev
+
+start_venv:
+	source flaskenv/bin/activate
+
+prep_req:
+	pip install -r requirements.txt
 
 hard_reset_db:
 	@echo "Deleting Migrations folder"
@@ -16,11 +26,12 @@ init_db:
 make initial_seed:
 	curl http://localhost:5000/api/users -X POST -H "Content-Type: application/json" -d '{"name": "Test User", "username": "Test123", "favorite_tech": "Kubernetes", "description": "Container orchestration tool."}'
 
-prep:
-	pipenv install --dev
+docker_tag:
+	docker tag flask_app_and_api:latest $(DOCKERHUB_REPO):$(tag)
 
-start_venv:
-	source flaskenv/bin/activate
+docker_push:
+	docker push $(DOCKERHUB_REPO):$(tag)
 
-prep_req:
-	pip install -r requirements.txt
+# Alternatively both commands together for more ease
+dockerhub: docker_tag
+	docker push $(DOCKERHUB_REPO):$(tag)

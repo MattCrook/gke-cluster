@@ -15,3 +15,7 @@ docker run -it -d -p 5000:5000 flask_app_and_api
 
 docker tag flask_app_and_api:latest mgcrook11/flask-app-api:1.0
 docker push mgcrook11/flask-app-api:1.0
+
+Example running make command:
+make docker_tag tag=1.6
+make docker push tag=1.6
