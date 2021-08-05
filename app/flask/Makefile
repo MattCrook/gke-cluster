@@ -5,7 +5,7 @@ hard_reset_db:
 	rm -rf migrations/
 	@sleep 3
 	@echo "deleting database"
-	rm database.db
+	rm db.sqlite3
 	@echo "done"
 
 init_db:
@@ -19,5 +19,8 @@ make initial_seed:
 prep:
 	pipenv install --dev
 
-prep_requirements:
+start_venv:
+	source flaskenv/bin/activate
+
+prep_req:
 	pip install -r requirements.txt

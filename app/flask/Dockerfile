@@ -16,23 +16,18 @@ RUN pip install -r requirements.txt
 
 WORKDIR /usr/src/app
 
-# copy in Python environment
-# COPY /venv /venv
-
 COPY . .
 
 ENV FLASK_APP=app
-ENV FLASK_ENV=development
+ENV FLASK_ENV=production
 
 RUN export FLASK_APP
 RUN export FLASK_ENV
-
 
 # initialize db
 RUN flask db init
 RUN flask db migrate -m "Initial migration."
 RUN flask db upgrade
-
 
 EXPOSE 5000
 

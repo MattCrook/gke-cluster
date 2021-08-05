@@ -6,20 +6,20 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin
 from flask_bcrypt import Bcrypt
 from sqlalchemy.engine import result
+from flask_apispec import FlaskApiSpec
 from config import Config
 from dotenv import load_dotenv
 import json
 import os
 import os.path
 from os import path
+
 load_dotenv()
+DOCS = FlaskApiSpec()
 
 
 POD_NAME = os.environ.get('POD_NAME')
 POD_NAMESPACE = os.environ.get('POD_NAMESPACE')
-# LABELS = os.environ.get('LABELS')
-# ANNOTATIONS = os.environ.get('ANNOTATIONS')
-# CONTAINER_REQUEST_CPU = os.environ.get('CONTAINER_CPU_REQUEST_MILLICORES')
 
 if os.path.isdir('/etc/downward'):
     CONTAINER_REQUEST_CPU = open("/etc/downward/containerCpuRequestMilliCores", "r").read()
@@ -35,14 +35,24 @@ POD_IP = os.environ.get('POD_IP')
 POD_SERVICE_ACCOUNT_NAME = os.environ.get('SERVICE_ACCOUNT')
 
 
+# def create_app(Config):
+#     app = Flask(__name__)
+#     app.config.from_object(Config)
+#     db = SQLAlchemy(app)
+#     ma = Marshmallow(app)
+#     migrate = Migrate(app, db)
+
+#     DOCS.init_app(app)
+#     return app
+
 
 app = Flask(__name__)
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
+DOCS.init_app(app)
 
 
 class User(db.Model):
@@ -82,6 +92,9 @@ class FavoriteTechSchema(ma.Schema):
 
 
 
+####################
+# API Routes
+####################
 @app.route('/api/users', methods=['GET', 'POST'])
 def users():
     if request.method == 'GET':
@@ -130,12 +143,13 @@ def ready():
 # App Routes
 ####################
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     all_users = db.session.query(User).all()
     all_tech = db.session.query(FavoriteTech).all()
     is_users = len(all_users) > 0
     return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME, POD_NAMESPACE=POD_NAMESPACE, CONTAINER_REQUEST_CPU=CONTAINER_REQUEST_CPU, LABELS=LABELS, ANNOTATIONS=ANNOTATIONS)
+
 
 @app.route('/admin', methods=['GET'])
 def admin():
@@ -157,6 +171,14 @@ class FavoriteTechModelView(ModelView):
 admin = Admin(app, name='Flask App Admin', template_mode='bootstrap3')
 admin.add_view(UserModelView(User, db.session))
 admin.add_view(FavoriteTechModelView(FavoriteTech, db.session))
+
+
+# Register the path and the entities within it
+# with app.test_request_context():
+#     Config.APISPEC_SPEC.path(view=User)
+
+# with app.test_request_context():
+#     Config.APISPEC_SPEC.path(view=FavoriteTech)
 
 
 if __name__ == "__main__":

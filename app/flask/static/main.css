@@ -23,9 +23,9 @@
 }
 
 .title {
-  font: 150 1.2em helvetica neue, open sans, sans-serif;
   color: rgb(7, 7, 7);
   text-transform: uppercase;
+  font-family: "Merriweather Sans", sans-serif;
 }
 
 .admin_dashboard_btn {
@@ -35,7 +35,7 @@
   padding-right: 16px;
   padding-left: 15px;
   color: rgb(2, 2, 2);
-  font-family: sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
   text-transform: uppercase;
   text-align: center;
   position: relative;
@@ -134,30 +134,32 @@
   border-bottom: 2px solid #999;
   color: #999;
   transition: all ease-in 0.5s;
+  font-family: "Merriweather Sans", sans-serif;
 }
 .fieldset_container input:focus,
 .fieldset_container input:active {
   outline: none;
-  border-bottom: 2px solid cornflowerblue;
-  color: cornflowerblue;
+  border-bottom: 2px solid rgb(28, 59, 116);
+  color: rgb(28, 59, 116);
 }
 .fieldset_container input:focus + label,
 .fieldset_container input:active + label {
   top: -0.5rem;
-  color: cornflowerblue;
+  color: rgb(37, 60, 102);;
   transform: translateY(-8%) scale(1.125);
   font-style: normal;
 }
 .fieldset_container input.filled {
-  color: cornflowerblue;
-  border-color: cornflowerblue;
+  color: rgb(28, 59, 116);
+  border-color: rgb(28, 59, 116);
 }
 .fieldset_container input.filled + label {
   top: -0.5rem;
-  color: cornflowerblue;
+  color: rgb(28, 59, 116);
   transform: translateY(-8%) scale(1.125);
   font-style: normal;
 }
+
 .fieldset_container label {
   position: absolute;
   left: 12px;
@@ -168,7 +170,8 @@
   color: #999;
   font-style: italic;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 13px;
+  font-family: "Merriweather Sans", sans-serif;
 }
 .fieldset_container label::-moz-selection {
   background: transparent;
@@ -186,7 +189,7 @@ input[type="submit"] {
   text-transform: uppercase;
   cursor: pointer;
   width: 70%;
-  margin-left: 15%;
+  margin-left: 14%;
   margin-top: 3%;
 }
 input[type="submit"]:hover,
@@ -205,9 +208,11 @@ input[type="submit"]:click {
 }
 
 .results_heading {
-  font-size: 16px;
+  font-size: 13px;
   padding-top: 25px;
   padding-bottom: 15px;
+  text-transform: uppercase;
+  color: rgb(14, 13, 13);
 }
 
 .results_body {
@@ -220,7 +225,7 @@ input[type="submit"]:click {
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 5%;
-  border-bottom: var(--ui-shadow-border);
+  border: var(--ui-shadow-border);
   box-shadow: var(--ui-shadow);
   border-radius: 3px 3px 3px 3px;
 }
@@ -261,4 +266,75 @@ input[type="submit"]:click {
   margin-top: 3%;
   font-family: "Merriweather Sans", sans-serif;
   font-size: 13px;
+}
+
+.signature {
+  margin: 10px auto;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.signature p {
+  text-align: center;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: 0.85em;
+  color: #aaaaaa;
+}
+
+.signature a {
+  color: #aaaaaa;
+  text-decoration: none;
+  font-weight: bold;
+}
+.signature_description {
+  font: 150 0.8em helvetica neue, open sans, sans-serif !important;
+  letter-spacing: 2px;
+}
+
+.signature_description_sub {
+  font: 150 0.6em helvetica neue, open sans, sans-serif !important;
+  letter-spacing: 2px;
+}
+
+.dropdown_container {
+  position: absolute;
+  right: 1%;
+  top: 8%;
+  width: 14%;
+  text-align: left;
+  font-size: 12.5px;
+  margin-top: 0.5%;
+  z-index: 4;
+  background-color: #fcfcfc;
+  transition: 0.5s all ease;
+  border-radius: 3px 3px 3px 3px;
+  border: 1px solid rgb(87, 87, 87);
+  border: var(--ui-shadow-border);
+  box-shadow: var(--ui-shadow);
+}
+
+.dropdown_row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  color: rgb(0, 0, 0);
+  font-family: "Merriweather Sans", sans-serif;
+}
+
+.dropdown_item {
+  margin-top: 6%;
+  margin-bottom: 5.5%;
+  margin-left: 5%;
+}
+
+.dropdown_row:hover {
+  color: #8a8a8a;
+  background-color: #f3f3f3;
+  cursor: pointer;
+}
+
+.dropdown_row i {
+  margin-right: 5%;
+  cursor: pointer;
 }

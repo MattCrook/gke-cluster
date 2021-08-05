@@ -16,6 +16,13 @@ Jinja2 = "*"
 marshmallow-sqlalchemy = "*"
 sqlalchemy = "*"
 python-dotenv = "*"
+flask-apispec = "*"
+apispec-webframeworks = "*"
+
+apispec = "*"
+
+# marshmallow = "*"
+# WTForms = "*"
 
 
 [dev-packages]

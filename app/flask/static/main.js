@@ -1,19 +1,16 @@
 const init = () => {
+  handleProfileButtonDropdown();
   animateInput();
   submitForm();
 };
 
 init();
 
-
 function animateInput() {
   const inputNodes = document.querySelectorAll(".input");
   const allInputs = Array.from(inputNodes);
   allInputs.forEach((input) => {
-    console.log("here");
-    input.addEventListener("click", (e) => {
-      console.log("here");
-
+    input.addEventListener("mouseout", (e) => {
       if (e.target.value === "") {
         input.classList.remove("filled");
       } else {
@@ -40,12 +37,13 @@ function submitForm() {
       description: description.value
     };
 
-      sendFormData(payload).then((response) => {
-          window.alert("Submitted!");
-          document.getElementById("main").style.display = "block";
-          window.location.href = window.location.origin
+    sendFormData(payload)
+      .then((response) => {
+        window.alert("Submitted!");
+        document.getElementById("main").style.display = "block";
+        window.location.href = window.location.origin;
       })
-      .catch(err => console.log({err}))
+      .catch((err) => console.log({ err }));
   });
 }
 
@@ -64,4 +62,43 @@ async function sendFormData(payload) {
   } catch (err) {
     console.log(err);
   }
+}
+
+function isOpen(element) {
+  if (element.style.display === "none") {
+    return false;
+  } else if (element.style.display === "block") {
+    return true;
+  }
+}
+
+function handleAction(isOpenState, element) {
+  const open = () => (element.style.display = "block");
+  const close = () => (element.style.display = "none");
+  // isOpenState === true ? open() : close();
+  if (isOpenState === true) {
+    open();
+  }
+  if (isOpenState === false) {
+    close();
+  }
+}
+
+function useDropDown(element) {
+  let state = isOpen(element);
+  return [
+    () => state,
+    (newState) => (state = handleAction(newState, element))
+  ];
+}
+
+function handleProfileButtonDropdown() {
+  const profileButton = document.getElementById("profile-button");
+
+  profileButton.addEventListener("click", (e) => {
+    const dropdown = document.querySelector(".dropdown_container");
+    const [isProfileDropdown, setIsProfileDropdown] = useDropDown(dropdown);
+    const toggleProfileDropdown = () => setIsProfileDropdown(!isProfileDropdown());
+    toggleProfileDropdown();
+  });
 }
