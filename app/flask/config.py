@@ -24,8 +24,8 @@ class Config(object):
         plugins=[FlaskPlugin(), MarshmallowPlugin()],
         info={'description': 'a demo app with a simple form to demonstrate a Flask App and API for handling requests and CRUD.'},
     )
-    APISPEC_SWAGGER_UI_URL = '/api/swagger-ui'
-    APISPEC_SWAGGER_URL = '/api/swagger'
+    APISPEC_SWAGGER_UI_URL = '/api/swagger-ui/'
+    APISPEC_SWAGGER_URL = '/api/swagger/'
     # TEST_SQLALCHEMY_DATABASE_URI = app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 
 

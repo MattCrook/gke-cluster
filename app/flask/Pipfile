@@ -18,11 +18,9 @@ sqlalchemy = "*"
 python-dotenv = "*"
 flask-apispec = "*"
 apispec-webframeworks = "*"
-
 apispec = "*"
-
-# marshmallow = "*"
-# WTForms = "*"
+marshmallow = "*"
+WTForms = "*"
 
 
 [dev-packages]

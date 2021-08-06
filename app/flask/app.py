@@ -6,7 +6,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin
 from flask_bcrypt import Bcrypt
 from sqlalchemy.engine import result
-from flask_apispec import FlaskApiSpec
+from flask_apispec.extension import FlaskApiSpec
 from config import Config
 from dotenv import load_dotenv
 import json
@@ -15,7 +15,7 @@ import os.path
 from os import path
 
 load_dotenv()
-DOCS = FlaskApiSpec()
+#DOCS = FlaskApiSpec()
 
 
 POD_NAME = os.environ.get('POD_NAME')
@@ -52,7 +52,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
-DOCS.init_app(app)
+# DOCS.init_app(app)
+DOCS = FlaskApiSpec(app)
 
 
 class User(db.Model):
@@ -156,6 +157,10 @@ def admin():
     return 'admin/master.html'
 
 
+@app.route('/api/swagger-ui/', methods=['GET'])
+def swagger():
+    return 'api/swagger-ui.html'
+
 ###################
 # Flask Admin Site
 ###################
@@ -179,7 +184,8 @@ admin.add_view(FavoriteTechModelView(FavoriteTech, db.session))
 
 # with app.test_request_context():
 #     Config.APISPEC_SPEC.path(view=FavoriteTech)
-
+# DOCS.register(User)
+# DOCS.register(FavoriteTech)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

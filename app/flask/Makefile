@@ -1,4 +1,4 @@
-SHELL:= /bin/bash
+SHELL:=/bin/bash
 DOCKERHUB_REPO := mgcrook11/flask-app-api
 
 prep:
@@ -6,7 +6,7 @@ prep:
 	pipenv sync --dev
 
 start_venv:
-	source flaskenv/bin/activate
+	source flaskvenv/bin/activate
 
 prep_req:
 	pip install -r requirements.txt
@@ -31,7 +31,7 @@ make initial_seed:
 make run_local:
 	export FLASK_APP=app
 	export FLASK_ENV=development
-	flask run_local
+	flask run
 
 docker_tag:
 	docker tag flask_app_and_api:latest $(DOCKERHUB_REPO):$(tag)
