@@ -33,6 +33,13 @@ Houses infrastructure for creating Google Storage Buckets, with corresponding IA
 
 This directory houses small apps I have made to containerize (with Docker) and deploy/ run on the GCP infrastructure created in Terraform. See the ReadMe in the App directory for more...
 
+### Flask App and API
+
+This is a small application that includes an API for handling requests for demo purposes to deploy using the provided infrastructure in Terraform, then deploy using either the provided Kubernetes config files or Helm.
+
+Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
+* Instructions [here](app/README.md)
+
 ## Live
 
 Houses the different environments to deploy to. Currently set up for:

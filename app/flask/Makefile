@@ -2,7 +2,8 @@ SHELL:= /bin/bash
 DOCKERHUB_REPO := mgcrook11/flask-app-api
 
 prep:
-	pipenv install --dev
+	pipenv install
+	pipenv sync --dev
 
 start_venv:
 	source flaskenv/bin/activate
@@ -25,6 +26,12 @@ init_db:
 
 make initial_seed:
 	curl http://localhost:5000/api/users -X POST -H "Content-Type: application/json" -d '{"name": "Test User", "username": "Test123", "favorite_tech": "Kubernetes", "description": "Container orchestration tool."}'
+
+
+make run_local:
+	export FLASK_APP=app
+	export FLASK_ENV=development
+	flask run_local
 
 docker_tag:
 	docker tag flask_app_and_api:latest $(DOCKERHUB_REPO):$(tag)
