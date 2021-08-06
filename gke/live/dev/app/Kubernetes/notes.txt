@@ -12,3 +12,18 @@ apt add curl or apt install curl
 kubectl port-forward <POD> 5000:5000 &
 kubectl exec flask-app-deployment-566fd4676c-87jx7 -- ls -lA /etc/downward
 kubectl exec flask-app-deployment-566fd4676c-87jx7 -- cat /etc/downward/annotations
+
+
+helm install flask-app-api --values values.yaml -n default --debug --dry-run .
+helm install flask-app-api --values values.yaml -n default .
+
+# ToDo: make MAKE command to set up cluster through glcoud
+gcloud container clusters create flask-app-cluster \
+    --num-nodes=2 \
+    --project=flask-app-310119 \
+    --zone=us-central1-c \
+    --machine-type e2-medium \
+    --enable-stackdriver-kubernetes
+
+gcloud container clusters delete <cluster_name>
+gcloud container clusters describe mycluster --format='get(endpoint)'

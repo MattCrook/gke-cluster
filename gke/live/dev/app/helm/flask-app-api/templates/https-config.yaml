@@ -1,0 +1,25 @@
+{{- if .Values.https.config.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "flask-app-api.fullname" . }}-https-cm
+data:
+  https.crt: |
+        -----BEGIN CERTIFICATE-----
+        MIICsjCCAZoCCQD8tgYuYEwv5zANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDDBBk
+        ZW1vLmV4YW1wbGUuY29tMB4XDTIxMDgwMzIxMTgxMVoXDTMxMDgwMTIxMTgxMVow
+        GzEZMBcGA1UEAwwQZGVtby5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQAD
+        ggEPADCCAQoCggEBAM7cuoRKXqnSJxIM1dPWGDTgZPZMmsrKYQNJGUlF+wg7ItKs
+        yY0yUu2uZrIu0U5t5cFD6TRVN6dKBo3yNfmGr6f3P6qvEEvK0mjBoXpFkkPax1UT
+        VMheyqFKXeuEyW9PYGwvvIT+FytKeY9zwe0F4Ohdq35ylsFbYbvas5qZwYJ28ZPn
+        a9cbku4SNbwd2EFZI2Ey2bcQw/3SPb5A1Jhdpv1z0EEjGUawYHVnqJcuJJ6c+07E
+        toSXjAgj9RfjWUjxo2r6LVztUgEopkgkGwNChMr+yIDaefxJKxKZkfgzA6rF3vJ5
+        xIdY7NymzFxlOIUg1zAFchO6DXxo6i62Tm7xROcCAwEAATANBgkqhkiG9w0BAQsF
+        AAOCAQEAnQRuk/EKP2XEP5f438y/P2yoz3zwHcjSZmcHbJ7OIZ1DO1jZCieOXvb6
+        7wKjTVloGFnM2fDdOLZUdRYtVmT+AJ08ZG0mvGkophPxJNvK23NCNfaqJfNIO3ca
+        6Bw1MwyNMGE3b7G9/oFUfOJ2GBOz8dnBvKWFnF2kCxaBW63wBhiaNARpYUsbObE8
+        WtJVd1/CbN45rNQN9aKBlS35s/A3GOIhcRERg3AcShMSFlFLfhlSZsYCrj7p+Id4
+        7jfLaz8XJaQ4roZYoqZxIau5fkyPgq8fD7mk4alZQCwp8+eZDtP2IyywnLxRjtVF
+        pqrDq0h9edr3Ban82I6qT2SRtf/rqA==
+        -----END CERTIFICATE-----
+{{- end }}
