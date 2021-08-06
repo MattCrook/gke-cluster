@@ -59,9 +59,9 @@ With the image built and the container running, the app should now be available 
 
 The app can be run on any infrastructure you choose (single compute instance, instance group, GKE cluster etc...) but for this example, it is meant to run in a GKE cluster.
 
-***To see instructions on provisioning the infrastructure, see the ReadMe for the child module cluster [here](/gke/live/dev/cluster/README.md).***
+***To see instructions on provisioning the infrastructure, see the ReadMe for the child module cluster [here](/gke/live/dev/cluster/).***
 
-***To see instructions on deploying with Kubernetes or Helm, see the ReadMe [here](/gke/live/dev/app/README.md).***
+***To see instructions on deploying with Kubernetes or Helm, see the ReadMe [here](/gke/live/dev/app/).***
 
 ***NOTE*** - This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image.
 

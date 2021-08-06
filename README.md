@@ -43,7 +43,7 @@ This is a small application that includes an API for handling requests for demo 
 
 Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
 
-* Instructions [here](app/README.md)
+* Instructions [here](app/)
 * To simply run the app locally, run:
   * `make run_flask_app_local`
   * Or, alternatively run with Docker, (preferred):
