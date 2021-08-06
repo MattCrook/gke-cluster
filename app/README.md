@@ -61,7 +61,7 @@ The app can be run on any infrastructure you choose (single compute instance, in
 
 ***To see instructions on provisioning the infrastructure, see the ReadMe for the child module cluster [here](/gke/live/dev/cluster/README.md).***
 
-***To see instructions on deploying with Kubernetes or Helm, see the ReadMe for the Flask App and API [here](/app/README.md).***
+<!-- ***To see instructions on deploying with Kubernetes or Helm, see the ReadMe for the Flask App and API [here](/app/README.md).*** -->
 
 #### Using Kubernetes
 
@@ -118,18 +118,6 @@ If created cluster with glcoud, run:
 If created with Terraform, run:
 
 * `terraform destroy`
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
