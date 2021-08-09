@@ -19,7 +19,7 @@ make run_local:
 
 make run docker:
 	docker build -t gke-django-app .
-	docker run -it -d -p 8000:8000 gke-django-app:latest
+	docker run -it -d -p 8000:8000 --env-file .env gke-django-app:latest
 
 make run_docker_compose_up:
 	docker compose up --build

@@ -12,9 +12,9 @@ ENV PATH "/venv/bin:$PATH"
 RUN pip install --upgrade pip
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
-COPY .env .
+# COPY .env .
 
 # install redis
 # python3 -m pip install channels_redis
