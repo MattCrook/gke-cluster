@@ -27,3 +27,14 @@ run_flask_app_development:
 
 kubernetes_dashboard:
 	@chmod +x ./scripts/kubernetes_dashboard.sh && ./scripts/kubernetes_dashboard.sh
+
+
+run_node_app_local:
+	@echo "Preparing and running Node.js/ Express App..."
+	@sleep 2
+	@chmod +x ./scripts/run_node_app_local.sh && ./scripts/run_node_app_local.sh
+
+run_node_app_development:
+	@echo "Preparing and running Node.js/ Express App..."
+	@sleep 2
+	cd app/node/ && docker-compose up --build

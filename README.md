@@ -35,36 +35,69 @@ Houses infrastructure for creating Google Storage Buckets, with corresponding IA
 
 ## App
 
-This directory houses small apps I have made to containerize (with Docker) and deploy/ run on the GCP infrastructure created in Terraform. See the ReadMe in the App directory for more...
+This directory houses small apps I have made to containerize (with Docker) and deploy/ run on the GCP infrastructure created in Terraform. Please refer to the ReadMe in the App directory for more.
+All instructions for the various applications can be found on the ReadMe in the `app/` directory ***[here](app/)***.
 
+All apps are for demo purposes to deploy using the provided infrastructure in Terraform, then deploy using either the provided Kubernetes config files or Helm.
+
+___
 #### Flask App and API
 
-This is a small application that includes an API for handling requests for demo purposes to deploy using the provided infrastructure in Terraform, then deploy using either the provided Kubernetes config files or Helm.
+This is a small Flask application, using SQLAlchemy and Marshmallow, that includes an API for handling requests.
 
-Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
+To simply run the app locally, run:
+```
+make run_flask_app_local
+```
 
-* Instructions [here](app/)
-* To simply run the app locally, run:
-  * `make run_flask_app_local`
-  * Or, alternatively run with Docker, (preferred):
-    * `make run_flask_app_development`
+Or, alternatively run with Docker, (*preferred*):
+```
+make run_flask_app_development
+```
 
+*Quick link*: [Readme](app/flask/)
+
+____
 #### Golang Todo App
 
 *Work in progress*
 
+____
+
 #### Django Full Stack App
 
-*Work in progress*
+Simple Django application. Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
 
+To simply run the app locally, run:
+```
+make run_node_app_local
+```
+
+Or, alternatively run with Docker, (*preferred*):
+```
+make run_node_app_development
+```
+
+*Quick link*: [Readme](app/django/)
+____
 
 #### Express/ Node.js App
 
 Simple Express app. Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
 
-* Instructions [here](app/)
+To simply run the app locally, run:
+```
+make run_node_app_local
+```
 
+Or, alternatively run with Docker, (*preferred*):
+```
+make run_node_app_development
+```
 
+*Quick link*: [ReadMe](app/node/)
+
+___
 
 ## Live
 

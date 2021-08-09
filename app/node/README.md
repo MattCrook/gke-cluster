@@ -53,7 +53,7 @@ The app can be run on any infrastructure you choose (single compute instance, in
 ***To see instructions on deploying with Kubernetes or Helm, see the ReadMe [here](/gke/live/dev/app/).***
 
 
-| NOTE: This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image. |
+| Note: This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 * Public image for this app is `mgcrook11/gke-node-app-public:1.0`
