@@ -1,0 +1,13 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Welcome inside a an GKE Cluster
+    div.Message
+      div.Title
+        h1 Node.js/ Express App
+      div.Description Your request just hit the LoadBalancer, or Ingress (depending on your config). If the Service is type LoadBalancer, it is provided by, and provisioned behind the scenes in GKE when selecting a Service type of "LoadBalancer" in the Kubernetes manifest.
+      span.Details That request then got forwarded to a NodePort service, which is created when creating a LoadBalancer, that is only available inside the cluster, that then forwarded the requests to a ClusterIP Service, which then picked a pod, and forwarded your request inside that pod where this app is running in a Docker container and listening on port 8080.
+    div.NavButtons
+      a(href="/user")
+          div.NavButton More on me

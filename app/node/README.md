@@ -1,9 +1,10 @@
-# Flask App and API
+# Node.js/ Express App
 
-Basic Flask app with an API and runs an in memory database, and runs in a Docker container for demo purposes. Instructions on how to deploy the app to a Kubernetes cluster are below.
+Basic Express app that, as of right now, just serves a static site. You can choose to run this locally, or using Docker if you would like, otherwise, instructions on how to deploy the app to a Kubernetes cluster are below.
 
-![flask-app-api-1](/app/public/Flask-app-api-1.png)
-![flask-app-api-1](/app/public/Flask-app-api-2.png)
+![gke-node-app](public/images/gke-node-app.png)
+
+![gke-node-app-2](public/images/gke-node-app-2.png)
 
 
 ## Setup
@@ -12,41 +13,35 @@ Run the following Make targets if you wish to run the app either locally, or usi
 
 #### Running Locally
 
-If you want to use [pipenv](https://pipenv-fork.readthedocs.io/en/latest/basics.html) to manage your virtualenv, make sure you have pipenv installed; then install dependencies and create virtual environment:
+To run locally using [nodemon](https://www.npmjs.com/package/nodemon) for hot reloads:
 ```
 make prep
-```
-
-If you choose to use the old fashioned way to manage your venv, to install dependencies and create virtual environment:
-
-```
-python3 -m flaskvenv venv
-make start_venv`
-make prep_req`
-```
-
-The application will need migrations to be run before you can start it, to do so, be in the flask directory and run:
-```
-make init_db
-```
-
-Now you can run the application, to do so, be in the flask directory and run:
-```
 make run_local
 ```
 
-The app will be available on `http://localhost:5000`
+The app will be available on `http://localhost:8080`
 
 #### Running with Docker (preferred)
 
-To run app using Docker, cd into the `app/flask/` directory and run:
+To run app using Docker:
 
 ```
-docker build -t flask_app_api .
-docker run -it -d -p 5000:5000 flask_app_api
+make run_docker
 ```
 
-With the image built and the container running, the app should now be available on `http://localhost:5000`
+Or, just for fun and as a added bonus, can also run with Docker-Compose:
+```
+make run_docker_compose_up
+```
+
+With the image built and the container running, the app should now be available on `http://localhost:8080`
+
+You can also exec into the container, if you need to debug anything by running:
+
+```
+make docker_exec CONTAINER_ID=<CONTAINER_ID>
+```
+* Where `CONTAINER_ID` is the ID of the running container you would like to exec into.
 
 
 ## Provisioning infrastructure and deploying app with Kubernetes or Helm
@@ -61,7 +56,7 @@ The app can be run on any infrastructure you choose (single compute instance, in
 | NOTE: This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-* Public image for this app is `mgcrook11/flask-app-api-public:1.0`
+* Public image for this app is `mgcrook11/gke-node-app-public:1.0`
 * Change the `.spec.containers.image` to this and get rid of `imagePullSecrets`
 
 #### Tearing Down
