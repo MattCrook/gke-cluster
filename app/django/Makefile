@@ -16,3 +16,10 @@ init_db:
 
 make run_local:
 	pipenv run python3 manage.py runserver
+
+make run docker:
+	docker build -t gke-django-app .
+	docker run -it -d -p 8000:8000 gke-django-app:latest
+
+make run_docker_compose_up:
+	docker compose up --build

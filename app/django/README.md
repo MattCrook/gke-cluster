@@ -13,6 +13,7 @@ Run the following Make targets if you wish to run the app either locally, or usi
 
 ```
 make prep
+make init_db
 make run_local
 ```
 
@@ -31,7 +32,7 @@ Or, just for fun and as a added bonus, can also run with docker compose:
 make run_docker_compose_up
 ```
 
-With the image built and the container running, the app should now be available on `http://localhost:80o0`
+With the image built and the container running, the app should now be available on `http://localhost:8000`
 
 You can also exec into the container, if you need to debug anything by running:
 

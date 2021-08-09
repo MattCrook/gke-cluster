@@ -1,0 +1,70 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+    <title>GKE Django App</title>
+  </head>
+
+  <body>
+    <div class="nav_container">
+      <div class="home_nav_container_1">
+        <div class="nav-item" id="logo_nav">
+          <a class="logo_btn" href="">GKE-Django-App</a>
+        </div>
+        <div id="btn4" class="nav-item">
+          <a class="nav-link" href="">Home <i class="fas fa-home"></i></a>
+        </div>
+      </div>
+
+      <div class="home_nav_container_2">
+        <div id="login_link" class="nav-item">
+          <div id="btn4">
+            <a class="nav-link" href="">Login <i class="fas fa-sign-in-alt"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content_card_container">
+        <div class="card_header">Django Full Stack Application</div>
+        <div class="p">This app is deployed in a GKE cluster, running in a Docker container.</div>
+        <div class="p">Environment variables from inside the pod:
+            <ul>
+                <li>Node Name: </li>
+                <li>Pod IP: </li>
+                <li>Host IP: </li>
+                <li>Pod Service Account Name: </li>
+                <li>Pod Name: </li>
+                <li>Node Name: </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="signature">
+        <p class="signature_description">
+          Made for demo purposes for <a href="https://github.com/MattCrook/gke-cluster/tree/master/app/django" target="_blank" rel="noopener noreferrer">Django App and API</a> <i class="fas fa-trademark"></i>
+        </p>
+        <p class="signature_description_sub">
+          Made by <a href="https://matt-crook.vercel.app/" target="_blank" rel="noopener noreferrer">Matt Crook</a> <i class="far fa-copyright"></i>
+        </p>
+      </div>
+
+  </body>
+
+</html>

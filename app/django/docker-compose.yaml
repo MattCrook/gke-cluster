@@ -1,16 +1,17 @@
 version: '3.9'
 
 services:
-  gke_node_app:
+  gke_django_app:
     build:
       context: .
       dockerfile: Dockerfile
     env_file: .env
     volumes:
       - .:/usr/src/app/
+    container_name: gke-django-app
     ports:
-      - 8080:8080
-    command: "npm run dev"
+      - 8000:8000
+    command: "python3 manage.py runserver"
 
 volumes:
-    gke_node_app:
+    gke_django_app:
