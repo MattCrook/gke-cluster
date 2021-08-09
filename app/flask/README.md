@@ -6,60 +6,74 @@ Basic Flask app with an API and runs an in memory database, and runs in a Docker
 ![flask-app-api-1](/app/public/Flask-app-api-2.png)
 
 
+## Setup
 
-## Using Kubernetes
+Run the following Make targets if you wish to run the app either locally, or using Docker.
 
-cd into the `gke/live/dev/app/Kubernetes` directory
+#### Running Locally
 
-* Deploy a LoadBalancer that will expose an external IP:
-  * `kubectl apply -f loadbalancer.yaml`
+If you want to use pipenv to manage your virtualenv, to install dependencies and create virtual environment:
+```
+make prep
+```
 
-* Deploy a deployment that will manage the pods:
-  * `kubectl apply -f deployment.yaml`
-    * ***NOTE*** - This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image.
-    * Public image for this app is `mgcrook11/flask-app-api-public:1.0`
-    * Change the `.spec.containers.image` to this and get rid of `imagePullSecrets`
-
-As a bonus, you can install the Kubernetes Dashboard for visualizing metrics and monitoring:
+If you choose to use the old fashioned way to manage your venv, to install dependencies and create virtual environment:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+python3 -m flaskvenv venv
+make start_venv`
+make prep_req`
 ```
-* To access, run:
-  * `kubectl proxy`
-    * Then open up:
-      *  `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy`
-      *  Select *from config* and the config file should be located at `~/.kube/config`
 
-## Using Helm
+The application will need migrations to be run before you can start it, to do so, be in the flask directory and run:
+```
+make init_db
+```
 
-cd into the `gke/live/dev/app/helm/flask-app-api` directory
+Now you can run the application, to do so, be in the flask directory and run:
+```
+make run_local
+```
 
-***NOTE*** - Same warning as previously mentioned, the deployment is pulling a private docker image, follow the instructions mentioned above.
+The app will be available on `http://localhost:5000`
 
-To deploy the chart as a Release:
-* Do a dry run first, and run with the debug flag:
-  * `helm install <CHART-NAME> -n <NAMESPACE> --values values.yaml --debug --dry-run .`
+#### Running with Docker (preferred)
 
-* If the output looks good and like what you expect:
-  * `helm install <CHART-NAME> -n <NAMESPACE> --values values.yaml --debug .`
+To run app using Docker, cd into the `app/flask/` directory and run:
 
-If you make changes to the manifests, and need to upgrade the Release:
+```
+docker build -t flask_app_api .
+docker run -it -d -p 5000:5000 flask_app_api
+```
 
-* `helm upgrade <RELEASE_NAME> --install -n <NAMESPACE> --values values.yaml -n default --debug --dry-run .`
-* `helm upgrade <RELEASE_NAME> --install -n <NAMESPACE> --values values.yaml -n default --debug .`
-
-To Uninstall a Release:
-
-* `helm uninstall <Release> --dry-run --debug`
-* `helm uninstall <Release>`
+With the image built and the container running, the app should now be available on `http://localhost:5000`
 
 
-## Tearing Down
+## Provisioning infrastructure and deploying app with Kubernetes or Helm
+
+The app can be run on any infrastructure you choose (single compute instance, instance group, GKE cluster etc...) but for this example, it is meant to run in a GKE cluster.
+
+***To see instructions on provisioning the infrastructure, see the ReadMe for the child module cluster [here](/gke/live/dev/cluster/).***
+
+***To see instructions on deploying with Kubernetes or Helm, see the ReadMe [here](/gke/live/dev/app/).***
+
+
+| NOTE: This is pulling a private Docker repository image. Either change the image in the `.yaml` file to one of yours, and deploy a docker registry secret, or change the image to a public image. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+* Public image for this app is `mgcrook11/flask-app-api-public:1.0`
+* Change the `.spec.containers.image` to this and get rid of `imagePullSecrets`
+
+#### Tearing Down
+
+Don't forget to clean up your infrastructure once finished.
 
 If created cluster with glcoud, run:
-* `gcloud container clusters delete <CLUSTER_NAME>`
+```
+gcloud container clusters delete <CLUSTER_NAME>
+```
 
 If created with Terraform, run:
-
-* `terraform destroy`
+```
+terraform destroy
+```
