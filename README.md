@@ -60,7 +60,9 @@ Full instructions on how to set everything up and run the app are in the ReadMe 
 
 #### Express/ Node.js App
 
-*Work in progress*
+Simple Express app. Full instructions on how to set everything up and run the app are in the ReadMe in the App directory.
+
+* Instructions [here](app/)
 
 
 
