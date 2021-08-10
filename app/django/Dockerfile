@@ -1,7 +1,6 @@
-
 FROM python:3.9-buster AS builder
 
-RUN python -m venv /venv
+RUN python3 -m venv /venv
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -9,21 +8,15 @@ ENV PYTHONUNBUFFERED 1
 # Create virtual env for docker container to run python in
 ENV PATH "/venv/bin:$PATH"
 
-RUN pip install --upgrade pip
+RUN python3 -m pip install --upgrade pip
 
 COPY requirements.txt .
 RUN python3 -m pip install -r requirements.txt
 
-# COPY .env .
-
-# install redis
-# python3 -m pip install channels_redis
-# python3 -m pip install selenium
-# RUN docker run -p 6379:6379 -d redis:5
+ARG DJANGO_KEY=${SECRET_KEY}
 
 #######################################
 # App stage #
-# Smaller official Debian-based Python image
 FROM python:3.9-slim-buster AS app
 
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -36,9 +29,15 @@ WORKDIR /usr/src/app
 # copy in Python environment
 COPY --from=builder /venv /venv
 
+ENV DJANGO_SETTINGS_MODULE=project.settings
+ENV SECRET_KEY=DJANGO_KEY
+
 COPY . .
 
-ENV DJANGO_SETTINGS_MODULE=project.settings
+# Run Migrations
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate
+
 
 EXPOSE 8000
 

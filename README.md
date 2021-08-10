@@ -38,7 +38,7 @@ Houses infrastructure for creating Google Storage Buckets, with corresponding IA
 This directory houses small apps I have made to containerize (with Docker) and deploy/ run on the GCP infrastructure created in Terraform. Please refer to the ReadMe in the App directory for more.
 All instructions for the various applications can be found on the ReadMe in the `app/` directory ***[here](app/)***.
 
-All apps are for demo purposes to deploy using the provided infrastructure in Terraform, then deploy using either the provided Kubernetes config files or Helm.
+All apps are for demo purposes to deploy using the provided infrastructure in Terraform, then deploy using either the provided Kubernetes manifest files or Helm.
 
 ___
 #### Flask App and API
@@ -104,14 +104,20 @@ ___
 Houses the different environments to deploy to, along with the corresponding infrastructure, services, and app configurations for each. Currently set up for:
 
 * `dev`
-* `staging`
-* `prod`
+* `staging` - *Work in progress*
+* `prod` - *Work in progress*
 
 ## Scripts
 
-Ad hoc scripts for developer tooling. Most scripts are not required and do not need to be run directly. They can be run from the Makefile in the root of this project. Description of the scripts below:
+Ad hoc scripts and helper scripts for developer tooling, and velocity. Most scripts are not required and do not need to be run directly. They can be/ are run from various Makefile make targets in this project. Description of a couple of the more pertinent scripts that are run from the Makefile in the root of this project below:
 
-* `make get_all_resources_in_cluster` - Once you have a GKE cluster up and running, this command will run a form of `kubectl api-resources` on your cluster, and output the results into a `resources` directory, with each resource separated into it's own CSV file with its containing artifacts.
+```
+make get_all_resources_in_cluster
+```
+* Once you have a GKE cluster up and running, this command will run a form of `kubectl api-resources` on your cluster, and output the results into a `resources` directory, with each resource separated into it's own CSV file with its containing artifacts.
   * This is a great way to see ***exactly*** everything that is running in your cluster, without having to run a form of  `kubectl get all`, then running a `kubectl get` on each individual resource that would not be returned with a `get all` call.
 
-* `make kubernetes_dashboard` - Quick shortcut if you have the Kubernetes Dashboard installed in your cluster. This command will run `kubectl proxy` and open the dashboard for you in a browser tab.
+```
+make kubernetes_dashboard
+```
+* Quick shortcut if you have the Kubernetes Dashboard installed in your cluster. This command will run `kubectl proxy` and open the dashboard for you in a browser tab.
