@@ -1,4 +1,5 @@
 pipenv install
 pipenv install django
+pip install python-dotenv
 pipenv run django-admin startproject project
 pipenv run python3 manage.py startapp app
