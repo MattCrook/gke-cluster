@@ -35,8 +35,8 @@ imagePullSecrets:
 # Defined In helper template to compose the Docker configuration file for use as the Secret's payload
 imageCredentials:
   registry: https://index.docker.io/v2/
-  username: mgcrook11
-  password: V2hpc3RsZXIxMSEh
+  username: ''
+  password: ''
   email: matt.crook11@gmail.com
 
 nameOverride: ""
