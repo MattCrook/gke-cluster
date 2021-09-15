@@ -104,7 +104,7 @@ resource "random_uuid" "provisioner" {
       "sudo curl -fsSL get.docker.com -o get-docker.sh",
       "sudo chmod +x get-docker.sh",
       "sudo sh get-docker.sh",
-      "wget https://storage.googleapis.com/router-device-state/binary/router-amd64-${var.router_version}",
+      // "wget https://storage.googleapis.com/router-device-state/binary/router-amd64-${var.router_version}",
       "sudo mv router-amd64-${var.router_version} /usr/bin/router",
       "sudo chmod +x /usr/bin/router",
       "sudo /usr/bin/router join version",
