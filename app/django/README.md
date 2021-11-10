@@ -2,7 +2,9 @@
 
 Basic Django full stack application.
 
-***Work in Progress***
+![gke-django-app-home](../public/gke-django-app-home.png)
+---
+![gke-django-app-login](../public/gke-django-app-login.png)
 
 
 ## Setup
@@ -55,7 +57,7 @@ The app can be run on any infrastructure you choose (single compute instance, in
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 * Public image for this app is `mgcrook11/gke-django-app-public:1.0`
-* Change the `.spec.containers.image` to this and get rid of `imagePullSecrets`
+* Change the `.spec.containers.image` to this, as well as port (to 8000) and get rid of `imagePullSecrets`
 
 #### Tearing Down
 

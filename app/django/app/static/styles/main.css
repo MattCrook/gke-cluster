@@ -173,6 +173,19 @@
   padding-right: 10px;
 }
 
+#submit_form {
+  display: flex;
+  justify-content: center;
+}
+
+#submit_form_btn {
+  border: 1px solid rgb(180, 180, 180);
+}
+
+#submit_form_btn:hover {
+  color: rgb(139, 139, 139);
+}
+
 #login_form_container {
   margin-top: 10px;
   display: flex;
