@@ -27,3 +27,33 @@ gcloud container clusters create flask-app-cluster \
 
 gcloud container clusters delete <cluster_name>
 gcloud container clusters describe mycluster --format='get(endpoint)'
+
+
+Create secret for https traffic
+
+$ openssl genrsa -out https.key 2048
+$ openssl req -new -x509 -key https.key -out https.cert -days 3650 -subj /CN=demo.example.com
+$ echo bar > foo
+
+Now you can use kubectl create secret to create a Secret from the three files:
+$ kubectl create secret generic fortune-https --from-file=https.key --from-file=https.cert --from-file=foo
+
+kubectl exec fortune-https -c web-server -- mount | grep certs
+
+
+Pull image from docker from private repository
+$ kubectl create secret docker-registry mydockerhubsecret \
+    --docker-username=myusername \
+    --docker-password=mypassword \
+    --docker-email=my.email@provider.com
+
+
+$ kubectl create secret generic flaskappdockerhubsecret \
+--from-file=.dockerconfigjson=/Users/matt.crook/.docker/config.json \
+--type=kubernetes.io/dockerconfigjson
+
+
+$ kubectl create secret docker-registry myregistrykey \
+    --docker-server=DUMMY_SERVER \
+    --docker-username=DUMMY_USERNAME --docker-password=DUMMY_DOCKER_PASSWORD \
+    --docker-email=DUMMY_DOCKER_EMAIL
