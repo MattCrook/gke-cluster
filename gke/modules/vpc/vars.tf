@@ -1,6 +1,11 @@
 #####################
 # Compute Network
 ######################
+variable "project_id" {
+  description = "The project id in GCP of the project to provision resouces"
+  type        = string
+  default     = ""
+}
 
 variable "network_description" {
     description = "Description of the google compute network"
