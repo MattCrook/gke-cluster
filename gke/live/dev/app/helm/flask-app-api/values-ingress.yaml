@@ -28,8 +28,13 @@ flaskapp:
       cpu: 128m
       memory: 500Mi
 
+# imagePullSecrets:
+#   - name: flaskappdockerhubsecret
+
+# default dockerhub secret created from template file
 imagePullSecrets:
-  - name: flaskappdockerhubsecret
+- name: dockerregistrykey
+
 
 # Creating image pull secret
 # Defined In helper template to compose the Docker configuration file for use as the Secret's payload
@@ -37,7 +42,7 @@ imageCredentials:
   registry: https://index.docker.io/v2/
   username: ''
   password: ''
-  email: matt.crook11@gmail.com
+  email:
 
 nameOverride: ""
 fullnameOverride: ""
@@ -64,35 +69,36 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+
 service:
-  clusterip:
-    type: ClusterIP
-    port: 80
-    targetPort: 80
-  loadbalancer:
-    type: LoadBalancer
-    port: 80
-    targetPort: 5000
-  nodeport:
-    type: NodePort
-    port: 80
-    targetPort: 5000
+  type: "NodePort"
+  port: 80
+  targetPort: 5000
+
+loadbalancer:
+  enabled: false
+
+# Must be true if using Ingress in GCP.
+nodeport:
+  enabled: true
 
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  enabled: true
+  className: "flask-app-nginx-controller"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    app.kubernetes.io/component: ingress
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    # Because host not set up, dns resolution won't work and this will cause ngnix to break
+    # - host: demo.example.com
+    - paths:
+      - path: /*
+        pathType: ImplementationSpecific
+  tls:
+   - secretName: tls-secret
+     hosts:
+       - demo.example.com
 
 
 https:
@@ -102,7 +108,7 @@ https:
     enabled: false
   tls:
     secret:
-      enabled: false
+      enabled: true
 
 resources:
   flaskapp:
@@ -134,7 +140,7 @@ tolerations: []
 affinity: {}
 
 fluent:
-  enabled: false
+  enabled: true
 
 prometheus:
   enabled: true

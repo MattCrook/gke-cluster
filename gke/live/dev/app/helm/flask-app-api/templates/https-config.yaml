@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: {{ template "flask-app-api.fullname" . }}-https-cm
 data:
+  https.key: |
+    # base64 encoded key
   https.crt: |
-    # ca certificate here
+    # base64 encoded cert
 {{- end }}
