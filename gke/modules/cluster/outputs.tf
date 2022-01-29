@@ -3,9 +3,9 @@ output "endpoint" {
     value = "${google_container_cluster.cluster.endpoint}"
 }
 
-output "instance_group_urls" {
-  value = "${google_container_cluster.cluster.instance_group_urls}"
-}
+// output "instance_group_urls" {
+//   value = "${google_container_cluster.cluster.instance_group_urls}"
+// }
 
 output "name" {
     value = "${google_container_cluster.cluster.name}"

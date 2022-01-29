@@ -52,7 +52,7 @@ make run_docker:
 	docker run -it -d -p 5000:5000 flask-app-api:latest
 
 docker_tag:
-	docker tag flask_app_and_api:latest $(DOCKERHUB_REPO):$(tag)
+	docker tag flask-app-api:latest $(DOCKERHUB_REPO):$(tag)
 
 docker_push:
 	docker push $(DOCKERHUB_REPO):$(tag)

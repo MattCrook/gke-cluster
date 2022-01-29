@@ -37,15 +37,17 @@ variable "min_master_version" {
   type        = string
 }
 
-// variable "node_version" {
-//   description = "The Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create"
-//   type        = string
-// }
+variable "node_version" {
+  description = "The Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create"
+  type        = string
+  default     = null
+}
 
-// variable "cluster_ipv4_cidr" {
-//   description = "The IP address range of the Kubernetes pods in this cluster in CIDR notation"
-//   type        = string
-// }
+variable "cluster_ipv4_cidr" {
+  description = "The IP address range of the Kubernetes pods in this cluster in CIDR notation"
+  type        = string
+  default     = null
+}
 
 variable "network" {
   description = "The name or self_link of the Google Compute Engine network to which the cluster is connected"
@@ -104,6 +106,12 @@ variable "node_count" {
   description = "The number of nodes in the node pool"
   type        = number
   default     = 2
+}
+
+variable "remove_default_node_pool" {
+  description = "We can't create a cluster with no node pool defined, but we want to only use separately managed node pools. So we create the smallest possible default node pool and immediately delete it."
+  type    = bool
+  default = true
 }
 
 variable "machine_type" {

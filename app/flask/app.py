@@ -55,6 +55,9 @@ migrate = Migrate(app, db)
 # DOCS.init_app(app)
 DOCS = FlaskApiSpec(app)
 
+# set optional bootswatch theme
+# app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -152,9 +155,9 @@ def index():
     return render_template('index.html', users=all_users, is_users=is_users, all_tech=all_tech, POD_IP=POD_IP, POD_SERVICE_ACCOUNT_NAME=POD_SERVICE_ACCOUNT_NAME, NODE_NAME=NODE_NAME, POD_NAME=POD_NAME, POD_NAMESPACE=POD_NAMESPACE, CONTAINER_REQUEST_CPU=CONTAINER_REQUEST_CPU, LABELS=LABELS, ANNOTATIONS=ANNOTATIONS)
 
 
-@app.route('/admin', methods=['GET'])
-def admin():
-    return 'admin/master.html'
+# @app.route('/admin/', methods=['GET'])
+# def admin():
+#     return 'admin/master.html'
 
 
 @app.route('/api/swagger-ui/', methods=['GET'])

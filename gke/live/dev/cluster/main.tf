@@ -3,8 +3,13 @@ terraform {
 }
 
 provider "google" {
-    project     = "${var.project}"
-    region      = "${var.region}"
+    project     = var.project
+    region      = var.region
+}
+
+provider "google-beta" {
+  project     = var.project
+  region      = var.region
 }
 
 resource "random_string" "password" {
@@ -17,7 +22,7 @@ module "dev_cluster_sa" {
 
     account_id                   = "gke-dev-cluster-sa"
     display_name                 = "${var.project}-gke-dev-cluster-sa"
-    project                      = "${var.project}"
+    project                      = var.project
     service_account_description  = "gke-dev-cluster default GKE cluster Service Account"
 }
 
@@ -25,16 +30,16 @@ module "cluster" {
     source = "../../../modules/cluster"
 
     cluster_name                    = "gke-dev-cluster"
-    project                         = "${var.project}"
-    primary_zone                    = "${var.primary_zone}"
+    project                         = var.project
+    primary_zone                    = var.primary_zone
     cluster_description             = "GKE cluster for dev environment"
     initial_node_count              = 1
     min_master_version              = "latest"
-    # additional_zones                = ["${var.additional_zones}"]
-    # node_version                    = "${var.node_version}"
+    # additional_zones                = [var.additional_zones]
+    # node_version                    = var.node_version
     # cluster_ipv4_cidr               = "10.0.0.0/8"
-    network                         = "${var.network}"
-    subnetwork                      = "${var.subnetwork}"
+    network                         = var.network
+    subnetwork                      = var.subnetwork
     logging_service                 = "logging.googleapis.com/kubernetes"
     monitoring_service              = "monitoring.googleapis.com/kubernetes"
     release_channel                 = "STABLE"
@@ -59,10 +64,10 @@ module "cluster" {
 }
 
 resource "google_compute_disk" "gce_persistant_disk" {
-    project = "${var.project}"
-    name    = "${var.gce_storage_disk_name}"
-    type    = "${var.gce_storage_disk_type}"
-    zone    = "${var.primary_zone}"
+    project = var.project
+    name    = var.gce_storage_disk_name
+    type    = var.gce_storage_disk_type
+    zone    = var.primary_zone
     size    = 10
 
     labels = {
@@ -73,7 +78,7 @@ resource "google_compute_disk" "gce_persistant_disk" {
 }
 
 resource "local_file" "password" {
-   content         = "${random_string.password.result}"
+   content         = random_string.password.result
    filename        = "password.pem"
    file_permission = 0400
 }

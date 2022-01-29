@@ -50,10 +50,10 @@ output "master_version" {
 ##########################
 # Node pool instance group
 ##########################
-output "instance_group_urls" {
-    description = "The resource URLs of the managed instance groups associated with this node pool"
-    value       = "${module.cluster.instance_group_urls}"
-}
+// output "instance_group_urls" {
+//     description = "The resource URLs of the managed instance groups associated with this node pool"
+//     value       = "${module.cluster.instance_group_urls}"
+// }
 
 
 ####################
