@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: localhost
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: todolist
+    ports:
+      - 3306:3306
+    # command: ["mysql", "-uroot", "-proot", "-e", "'CREATE DATABASE todolist'"]
+  client:
+    depends_on:
+      - db
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    environment:
+      SERVER: http://localhost:8000/
+    volumes:
+      - .:/usr/src/client/
+      - db_data:/var/lib/mysql
+    ports:
+      - 8080:8080
+    command: ["npx", "http-server"]
+  api:
+    depends_on:
+      - db
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: api
+    volumes:
+      - .:/usr/src/api/
+      - db_data:/var/lib/mysql
+    ports:
+      - 8000:8000
+    # command: ["go", "run", "/usr/src/api/todolist.go"]
+    command: ["todolist.go"]
+    environment:
+      MYSQL_DATABASE: todolist
+      MYSQL_USER: localhost
+      MYSQL_PASSWORD: root
+      # MYSQL_ROOT_PASSWORD: root
+      DB_PORT: 3306
+      # DB_HOST: localhost
+
+volumes:
+  db_data:

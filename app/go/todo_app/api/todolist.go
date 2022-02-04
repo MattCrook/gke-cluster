@@ -1,11 +1,3 @@
-// https://betterprogramming.pub/build-a-simple-todolist-app-in-golang-82297ec25c7d
-// go get -u github.com/gorilla/mux
-// go get -u github.com/sirupsen/logrus
-// go get -u github.com/jinzhu/gorm
-// go get -u github.com/go-sql-driver/mysql
-// go get -u github.com/jinzhu/gorm/dialects/mysql
-// go mod init
-// go mod tidy
 package main
 
 import (
@@ -22,8 +14,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-
-var db, _ = gorm.Open("mysql", "root:root@/todolist?charset=utf8&parseTime=True&loc=Local")
+var db, _ = gorm.Open("mysql", "localhost:root@/todolist?charset=utf8&parseTime=True&loc=Local")
+// var db, _ = gorm.Open("mysql", "root:root@/todolist?charset=utf8&parseTime=True&loc=Local")
+// var db, _ = gorm.Open("mysql", "localhost:root@tcp(127.0.0.1:3306)/todolist?charset=utf8&parseTime=True&loc=Local")
 
 type TodoItemModel struct{
 	Id int `gorm:"primary_key"`
