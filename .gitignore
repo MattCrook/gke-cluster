@@ -145,7 +145,3 @@ flaskvenv
 
 *.cert*
 *.key*
-
-
-prod_cluster/
-prod/
